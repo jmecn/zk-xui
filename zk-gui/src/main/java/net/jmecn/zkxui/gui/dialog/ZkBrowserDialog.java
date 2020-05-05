@@ -282,7 +282,6 @@ public class ZkBrowserDialog extends JFrame {
 		dialog.setVisible(true);
 
 		ZkXuiApp app = dialog.getResult();
-		System.out.println(app);
 		if (app == null) {
 			return;
 		}
