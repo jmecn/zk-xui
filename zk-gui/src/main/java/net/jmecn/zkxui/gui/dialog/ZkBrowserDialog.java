@@ -47,8 +47,6 @@ public class ZkBrowserDialog extends JFrame {
 
 	private JTextField pathField;
 
-	private JList<String> nodeList;
-	
 	private ZkNodeListModel listModel;
 
 	private ZkPropertyTableModel tableModel;
@@ -163,25 +161,29 @@ public class ZkBrowserDialog extends JFrame {
 			return;
 		}
 
-		// Connection failed.
-		if (!app.connect()) {
-			JOptionPane.showMessageDialog(this, "Connection to [" + app.getEnv().getZkServers() + "] failed.", "WARN",
-					JOptionPane.WARNING_MESSAGE);
-			return;
-		}
-
 		this.app = app;
 		setButtonEnabled(true);
 		connectButton.setText("Disconnect");
+		
+		refresh();
+		repaint();
 	}
 
 	private void disconnect() {
 		if (app != null) {
 			app.disconnect();
+			app = null;
 		}
+		connectButton.setText("Connect");
 		setButtonEnabled(false);
+		reset();
 	}
 
+	private void reset() {
+	    pathField.setText("/");
+	    tableModel.setZkNode(null);
+	    listModel.setZkNode(true, null);
+	}
 
     private void refresh() {
     	if (app == null) {
@@ -195,17 +197,8 @@ public class ZkBrowserDialog extends JFrame {
         this.zkNode = zkNode;
 
         pathField.setText(app.getCurrentPath());
-
-        refreshLeaves();
-        refreshNodes();
-    }
-
-    private void refreshNodes() {
-    	listModel.setZkNode(app.isRootNode(), zkNode);
-    }
-
-    private void refreshLeaves() {
-    	tableModel.setZkNode(zkNode);
+        listModel.setZkNode(app.isRootNode(), zkNode);
+        tableModel.setZkNode(zkNode);
     }
 
     private void forward(int idx, String node) {

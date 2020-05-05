@@ -28,6 +28,7 @@ hs_err_pid*
 *.so
 *.dlib
 
+**/*.cfg
 /.idea/
 ${catalina.base}
 *.MF

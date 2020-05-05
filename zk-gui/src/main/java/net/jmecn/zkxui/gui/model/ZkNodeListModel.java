@@ -13,9 +13,13 @@ public class ZkNodeListModel extends AbstractListModel<String> {
 	private ZkNode zkNode = null;
 
 	public void setZkNode(boolean isRoot, ZkNode zkNode) {
+	    int lastLength = 0;
+	    if (this.zkNode != null) {
+	        lastLength = this.zkNode.getNodeLst().size();
+	    }
 		this.isRoot = isRoot;
 		this.zkNode = zkNode;
-		this.fireContentsChanged(this, 0, zkNode.getNodeLst().size());
+		this.fireContentsChanged(this, 0, lastLength - 1);
 	}
 
 	@Override

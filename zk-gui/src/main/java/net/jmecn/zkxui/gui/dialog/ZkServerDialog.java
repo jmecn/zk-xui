@@ -1,6 +1,8 @@
 package net.jmecn.zkxui.gui.dialog;
 
 import java.awt.BorderLayout;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.List;
@@ -22,7 +24,7 @@ public class ZkServerDialog extends JDialog {
 
 	private static final long serialVersionUID = 1L;
 
-	private Env result;
+	private ZkXuiApp result;
 
 	private JList<Env> list;
 
@@ -50,6 +52,14 @@ public class ZkServerDialog extends JDialog {
 					ok(index);
 				}
 			}
+		});
+		
+		list.addKeyListener(new KeyAdapter() {
+		    public void keyTyped(KeyEvent e) {
+		        if (e.getKeyChar() == '\n') {
+		            ok(list.getSelectedIndex());
+		        }
+		    }
 		});
 
 		List<Env> envList = ZkServerList.INSTANCE.list();
@@ -122,7 +132,16 @@ public class ZkServerDialog extends JDialog {
 			return;
 		}
 
-		result = envlist.get(idx);
+		Env env = envlist.get(idx);
+		ZkXuiApp app = new ZkXuiApp(env);
+        // Connection failed.
+        if (!app.connect()) {
+            JOptionPane.showMessageDialog(this, "Connection to [" + app.getEnv().getZkServers() + "] failed.", "WARN",
+                    JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        this.result = app;
 		dispose();
 	}
 
@@ -185,10 +204,6 @@ public class ZkServerDialog extends JDialog {
 	}
 
 	public ZkXuiApp getResult() {
-		if (result == null) {
-			return null;
-		}
-
-		return new ZkXuiApp(result);
+		return result;
 	}
 }
