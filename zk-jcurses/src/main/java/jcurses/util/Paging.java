@@ -1,21 +1,22 @@
 package jcurses.util;
 
 /**
- * A utility class to handle paging in components. The class get the 'page size' and the size as constructor argument
- * and calculates page numbers, start and end indexes etc...
+ * A utility class to handle paging in components. The class get the 'page size'
+ * and the size as constructor argument and calculates page numbers, start and
+ * end indexes etc...
  * 
  * 
  */
 public class Paging {
 
     private int _pageSize = 0;
-    private int _size     = 0;
+    private int _size = 0;
 
     /**
      * The constructor
      *
      * @param pageSize the page size
-     * @param size the size
+     * @param size     the size
      * 
      */
     public Paging(int pageSize, int size) {
@@ -94,11 +95,11 @@ public class Paging {
     }
 
     /**
-     * The method returns an index for the given page offset of the given page The extra handling for the last by one
-     * page
+     * The method returns an index for the given page offset of the given page The
+     * extra handling for the last by one page
      * 
      * @param pageNumber pageNumber
-     * @param offset page offset
+     * @param offset     page offset
      * @return index
      * 
      */

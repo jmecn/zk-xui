@@ -28,25 +28,25 @@ public enum ZkServerList {
     private List<Env> list = new ArrayList<Env>();
 
     ZkServerList() {
-    	if (!file.exists()) {
-    		init();
-    	}
+        if (!file.exists()) {
+            init();
+        }
 
-    	if (file.exists()) {
-        	load();
+        if (file.exists()) {
+            load();
         }
     }
 
     private void init() {
-    	try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
-    		out.printf("%s=%s", "localhost", "127.0.0.1:2181");
-    	} catch (IOException e) {
-    	}
+        try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
+            out.printf("%s=%s", "localhost", "127.0.0.1:2181");
+        } catch (IOException e) {
+        }
     }
 
     private void load() {
         try (Scanner scanner = new Scanner(new FileInputStream(file))) {
-            while(scanner.hasNextLine()) {
+            while (scanner.hasNextLine()) {
                 String line = scanner.nextLine();
                 // skip empty lists
                 if (line.trim().length() == 0) {
@@ -62,8 +62,8 @@ public enum ZkServerList {
                 if (line.matches(".+=.+")) {
                     int idx = line.indexOf('=');
                     String name = line.substring(0, idx);
-                    String value = line.substring(idx+1, line.length());
-                    list.add(new Env(name ,value));
+                    String value = line.substring(idx + 1, line.length());
+                    list.add(new Env(name, value));
                 }
             }
         } catch (IOException e) {

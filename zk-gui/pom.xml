@@ -1,22 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-	<modelVersion>4.0.0</modelVersion>
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-	<parent>
-		<groupId>net.jmecn.zkxui</groupId>
-		<artifactId>zk-xui</artifactId>
-		<version>1.0.0.RELEASE</version>
-	</parent>
-	
-	<artifactId>zk-gui</artifactId>
+    <parent>
+        <groupId>net.jmecn.zkxui</groupId>
+        <artifactId>zk-xui</artifactId>
+        <version>1.0.0.RELEASE</version>
+    </parent>
 
-	<dependencies>
-		<dependency>
-			<groupId>net.jmecn.zkxui</groupId>
-			<artifactId>zk-client</artifactId>
-			<version>${project.version}</version>
-		</dependency>
-	</dependencies>
+    <artifactId>zk-gui</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>net.jmecn.zkxui</groupId>
+            <artifactId>zk-client</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>

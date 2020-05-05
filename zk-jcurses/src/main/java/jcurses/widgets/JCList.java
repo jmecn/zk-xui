@@ -18,15 +18,15 @@ import jcurses.util.Rectangle;
 
 public class JCList<T> extends Widget implements IScrollable {
 
-    private int     _visibleSize = -1;
-    private boolean _multiple    = false;
+    private int _visibleSize = -1;
+    private boolean _multiple = false;
 
-    private Vector<T>       _items    = new Vector<T>();
+    private Vector<T> _items = new Vector<T>();
     private Vector<Boolean> _selected = new Vector<>();
 
-    private int _startIndex   = 0;
+    private int _startIndex = 0;
     private int _trackedIndex = 0;
-    private int _startPos     = 0;
+    private int _startPos = 0;
 
     private boolean _selectable = true;
 
@@ -41,11 +41,14 @@ public class JCList<T> extends Widget implements IScrollable {
     /**
      * The constructor
      * 
-     * @param visibleSize number of visible items. If the entire number of items is more, the widget scrolls items 'by a
-     *            window'. If -1 is given, than the visible size is defined dependent of the layout size, that is, the
-     *            widget has no preferred y size.
-     * @param multiple true, if more as one items can be selected a time, false, if only one item can be selected at a
-     *            time, in this case selecting of an item causes deselecting of the previous selected item.
+     * @param visibleSize number of visible items. If the entire number of items is
+     *                    more, the widget scrolls items 'by a window'. If -1 is
+     *                    given, than the visible size is defined dependent of the
+     *                    layout size, that is, the widget has no preferred y size.
+     * @param multiple    true, if more as one items can be selected a time, false,
+     *                    if only one item can be selected at a time, in this case
+     *                    selecting of an item causes deselecting of the previous
+     *                    selected item.
      */
     public JCList(int visibleSize, boolean multiple) {
         _visibleSize = visibleSize;
@@ -56,9 +59,10 @@ public class JCList<T> extends Widget implements IScrollable {
     /**
      * The constructor.
      * 
-     * @param visibleSize number of visible items. If the entire number of items is more, the widget scrolls items 'by a
-     *            window'. If -1 is given, than the visible size is defined dependent of the layout size, that is, the
-     *            widget has no preferred y size.
+     * @param visibleSize number of visible items. If the entire number of items is
+     *                    more, the widget scrolls items 'by a window'. If -1 is
+     *                    given, than the visible size is defined dependent of the
+     *                    layout size, that is, the widget has no preferred y size.
      * 
      */
     public JCList(int visibleSize) {
@@ -76,9 +80,9 @@ public class JCList<T> extends Widget implements IScrollable {
         return __listDefaultColors;
     }
 
-    private static CharColor __selectedItemDefaultColors =
-        new CharColor(CharColor.BLUE, CharColor.WHITE, CharColor.REVERSE);
-    private CharColor        _selectedItemColors         = getSelectedItemDefaultColors();
+    private static CharColor __selectedItemDefaultColors = new CharColor(CharColor.BLUE, CharColor.WHITE,
+            CharColor.REVERSE);
+    private CharColor _selectedItemColors = getSelectedItemDefaultColors();
 
     private CharColor getSelectedItemDefaultColors() {
         return __selectedItemDefaultColors;
@@ -101,7 +105,7 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     private static CharColor __titleDefaultColors = new CharColor(CharColor.WHITE, CharColor.RED, CharColor.BOLD);
-    private CharColor        _titleColors         = getTitleDefaultColors();
+    private CharColor _titleColors = getTitleDefaultColors();
 
     private CharColor getTitleDefaultColors() {
         return __titleDefaultColors;
@@ -143,16 +147,16 @@ public class JCList<T> extends Widget implements IScrollable {
         String text = null;
         if (_title != null) {
             text = (_title.length() > (getSize().getWidth() - 2)) ? _title.substring(0, (getSize().getWidth() - 2))
-                : _title;
+                    : _title;
             Toolkit.printString(text, getAbsoluteX() + (getSize().getWidth() - text.length()) / 2, getAbsoluteY(),
-                getTitleColors());
+                    getTitleColors());
         }
     }
 
     /**
      * Adds an item to the list at the specified position
      * 
-     * @param pos the position to insert the item
+     * @param pos  the position to insert the item
      * @param item item to add
      */
     public void add(int pos, T item) {
@@ -211,8 +215,8 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     private void dispatchEvent(int index, boolean value) {
-        ItemEvent event =
-            new ItemEvent(this, index, _items.elementAt(index), value ? ItemEvent.SELECTED : ItemEvent.DESELECTED);
+        ItemEvent event = new ItemEvent(this, index, _items.elementAt(index),
+                value ? ItemEvent.SELECTED : ItemEvent.DESELECTED);
         _listenerManager.handleEvent(event);
     }
 
@@ -262,7 +266,8 @@ public class JCList<T> extends Widget implements IScrollable {
 
     /**
      * @param pos the position to test, whether selected
-     * @return true, if the item at the specified position is selected, false otherwise
+     * @return true, if the item at the specified position is selected, false
+     *         otherwise
      * 
      * 
      */
@@ -318,7 +323,8 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     /**
-     * @return the selected item, if only one item is selected, <code>null</code> otherwise.
+     * @return the selected item, if only one item is selected, <code>null</code>
+     *         otherwise.
      */
     public T getSelectedItem() {
         Vector<T> results = getSelectedItems();
@@ -331,7 +337,8 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     /**
-     * @return index of the selected item, if only one item is selected, <code>null</code> otherwise.
+     * @return index of the selected item, if only one item is selected,
+     *         <code>null</code> otherwise.
      */
     public int getSelectedIndex() {
         int[] results = getSelectedIndexes();
@@ -477,7 +484,8 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     /**
-     * Gets the currently tracked item (i.e. where the 'cursor' line is when the user is navigating the list).
+     * Gets the currently tracked item (i.e. where the 'cursor' line is when the
+     * user is navigating the list).
      *
      * @return the index of the current tracked item.
      */
@@ -486,7 +494,8 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     /**
-     * Sets the currently tracked item (i.e. where the 'cursor' line is when the user is navigating the list).
+     * Sets the currently tracked item (i.e. where the 'cursor' line is when the
+     * user is navigating the list).
      *
      * @param pos the index of the current tracked item.
      * @exception IllegalArgumentException if pos is out of range.
@@ -564,7 +573,8 @@ public class JCList<T> extends Widget implements IScrollable {
     /**
      * Sets, whether items can be selected at all
      * 
-     * @param value true, if items can be selected, false otherwise ( in this case items can only be 'invoked')
+     * @param value true, if items can be selected, false otherwise ( in this case
+     *              items can only be 'invoked')
      */
     public void setSelectable(boolean value) {
         _selectable = value;
@@ -573,18 +583,21 @@ public class JCList<T> extends Widget implements IScrollable {
     /**
      * Sets, whether items can be selected at all
      * 
-     * @return true, if items can be selected, false otherwise ( in this case items can only be 'invoked')
+     * @return true, if items can be selected, false otherwise ( in this case items
+     *         can only be 'invoked')
      */
     public boolean getSelectable() {
         return _selectable;
     }
 
     /**
-     * This method tests, if the item at the specified position can be selected and invoked at all. The sense is, to
-     * give derived classes the posssibility to implement 'separators'. Here returns always <code>true</code>.
+     * This method tests, if the item at the specified position can be selected and
+     * invoked at all. The sense is, to give derived classes the posssibility to
+     * implement 'separators'. Here returns always <code>true</code>.
      * 
      * @param i the position to test
-     * @return true if the item at the specified position can be selected and invoked, false otherwise
+     * @return true if the item at the specified position can be selected and
+     *         invoked, false otherwise
      */
     protected boolean isSelectable(int i) {
         return true;
@@ -607,7 +620,7 @@ public class JCList<T> extends Widget implements IScrollable {
                 printItem(index, rect);
             } else {
                 Toolkit.drawRectangle(new Rectangle(rect.getX() + 1, rect.getY() + i + 1, rect.getWidth() - 2, 1),
-                    getColors());
+                        getColors());
             }
         }
         if (_items.size() == 0) {
@@ -635,7 +648,7 @@ public class JCList<T> extends Widget implements IScrollable {
     private void drawFirstRowSelected() {
         if (hasFocus()) {
             Toolkit.drawRectangle(getAbsoluteX() + 1, getAbsoluteY() + 1, getSize().getWidth() - 2, 1,
-                getSelectedItemColors());
+                    getSelectedItemColors());
         }
     }
 
@@ -693,8 +706,9 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     /**
-     * The method returns the display representation of the string und is called by the widget before it paints an item.
-     * The idea is to make it possible in derived classes to paint other strings as managed in the widget. Here returns
+     * The method returns the display representation of the string und is called by
+     * the widget before it paints an item. The idea is to make it possible in
+     * derived classes to paint other strings as managed in the widget. Here returns
      * always the same string as <code>item</code>
      * 
      * @param item string to give display representation
@@ -713,7 +727,7 @@ public class JCList<T> extends Widget implements IScrollable {
     }
 
     private static InputChar __changeStatusChar = new InputChar(' ');
-    private static InputChar __callItemChar     = new InputChar('\n');
+    private static InputChar __callItemChar = new InputChar('\n');
 
     protected InputChar getChangeStatusChar() {
         return __changeStatusChar;
@@ -900,7 +914,7 @@ public class JCList<T> extends Widget implements IScrollable {
     public CharColor getScrollbarColors() {
         CharColor colors = new CharColor(getColors().getForeground(), getColors().getBackground());
         colors.setBlackWhiteAttribute(
-            (colors.getBlackWhiteAttribute() == CharColor.REVERSE) ? CharColor.NORMAL : CharColor.REVERSE);
+                (colors.getBlackWhiteAttribute() == CharColor.REVERSE) ? CharColor.NORMAL : CharColor.REVERSE);
         return colors;
     }
 

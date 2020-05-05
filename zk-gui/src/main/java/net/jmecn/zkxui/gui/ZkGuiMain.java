@@ -8,19 +8,19 @@ import net.jmecn.zkxui.gui.dialog.ZkBrowserDialog;
 
 public class ZkGuiMain {
 
-	public static void main(String[] args) {
-		String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
-		try {
-			UIManager.setLookAndFeel(lookAndFeel);
-		} catch (ClassNotFoundException | InstantiationException | IllegalAccessException
-				| UnsupportedLookAndFeelException e) {
-			e.printStackTrace();
-		}
+    public static void main(String[] args) {
+        String lookAndFeel = UIManager.getSystemLookAndFeelClassName();
+        try {
+            UIManager.setLookAndFeel(lookAndFeel);
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException
+                | UnsupportedLookAndFeelException e) {
+            e.printStackTrace();
+        }
 
-		SwingUtilities.invokeLater(() -> {
-			ZkBrowserDialog dialog = new ZkBrowserDialog();
-			dialog.setVisible(true);
-		});
-	}
+        SwingUtilities.invokeLater(() -> {
+            ZkBrowserDialog dialog = new ZkBrowserDialog();
+            dialog.setVisible(true);
+        });
+    }
 
 }

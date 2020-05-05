@@ -80,7 +80,7 @@ public class ZkServerDialog extends Dialog implements WidgetsConstants {
 
     private Panel getToolBox() {
         Panel panel = new Panel(-1, 1);
-        
+
         Button add = ButtonBuilder.newButton("(A)dd", 'a', (e) -> {
             add();
         });
@@ -186,9 +186,10 @@ public class ZkServerDialog extends Dialog implements WidgetsConstants {
         }
 
         Env env = envlist.get(idx);
-        ConfirmDialog confirm =
-            new ConfirmDialog("DELETE", "Are you sure to delete the selected ZooKeeper environment?\nNAME: "
-                + env.getName() + "\nVALUE: " + env.getZkServers(), "No", "Yes");
+        ConfirmDialog confirm = new ConfirmDialog("DELETE",
+                "Are you sure to delete the selected ZooKeeper environment?\nNAME: " + env.getName() + "\nVALUE: "
+                        + env.getZkServers(),
+                "No", "Yes");
 
         confirm.show();
         if (confirm.getResult() == null || confirm.getResult()) {

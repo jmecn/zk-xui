@@ -9,21 +9,23 @@ import jcurses.system.Toolkit;
 import jcurses.util.Rectangle;
 
 /**
- * This class is a jcurses-internal class, whose task is to manage jcurses text based windows. It schouldn't be used
- * writing applications.
+ * This class is a jcurses-internal class, whose task is to manage jcurses text
+ * based windows. It schouldn't be used writing applications.
  */
 class WindowManager {
 
     private static Vector __windowsStack = new Vector();
 
     private static CharColor __defaultScreenColors = new CharColor(CharColor.BLUE, CharColor.BLUE);
-    private static CharColor __colors              = getDefaultScreenColors();
+    private static CharColor __colors = getDefaultScreenColors();
 
     /**
-     * Method to be used by external threads wishing to perform safe calls to jcurses widgets. Access to this method is
-     * provided from WidgetUtilities.invokeAndWait().
+     * Method to be used by external threads wishing to perform safe calls to
+     * jcurses widgets. Access to this method is provided from
+     * WidgetUtilities.invokeAndWait().
      *
-     * @param r a <code>Runnable</code> containing the code to be executed in a thread-safe manner.
+     * @param r a <code>Runnable</code> containing the code to be executed in a
+     *          thread-safe manner.
      */
     static synchronized void invokeAndWait(Runnable r) {
         r.run();
@@ -252,7 +254,7 @@ interface WindowManagerBlockingCondition {
 
 class WindowManagerInputThread extends Thread {
 
-    private boolean _run  = true;
+    private boolean _run = true;
     private boolean _read = true;
 
     public void run() {

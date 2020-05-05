@@ -15,8 +15,9 @@ import jcurses.util.Rectangle;
 import lombok.extern.slf4j.Slf4j;
 
 /**
- * This class is the 'work factory' of the jcurses library. It contains methods for primitive input and output
- * operations and is only interface to platform dependend libraries. An developer must not usually call methods of this
+ * This class is the 'work factory' of the jcurses library. It contains methods
+ * for primitive input and output operations and is only interface to platform
+ * dependend libraries. An developer must not usually call methods of this
  * class, these are used implementing widgets and in jcurses core.
  */
 @Slf4j
@@ -25,19 +26,19 @@ public enum Toolkit {
     INSTANCE;
 
     public static final short CORNER_UNDER_LINE = 0;
-    public static final short CORNER_OVER_LINE  = 1;
+    public static final short CORNER_OVER_LINE = 1;
 
     public static final short LL_CORNER = 2;
     public static final short LR_CORNER = 3;
     public static final short UL_CORNER = 4;
     public static final short UR_CORNER = 5;
 
-    static final int VERTICAL   = 0;
+    static final int VERTICAL = 0;
     static final int HORIZONTAL = 1;
 
-    private static long[]    __attributes  = { 0, 0, 0 };
-    private static short[]   __basicColors = { 0, 0, 0, 0, 0, 0, 0, 0 };
-    private static short[][] __colorpairs  = new short[8][8];
+    private static long[] __attributes = { 0, 0, 0 };
+    private static short[] __basicColors = { 0, 0, 0, 0, 0, 0, 0, 0 };
+    private static short[][] __colorpairs = new short[8][8];
 
     static {
         System.load(getLibraryPath());
@@ -51,9 +52,11 @@ public enum Toolkit {
     private static Hashtable __clips = new Hashtable();
 
     /**
-     * The method sets the clippping rectangle for the current thread. All the output operations, that are performed by
-     * this thread after a call of this method, will paint only within the clip rectangle. If other clips were set
-     * before this, then the used clip rectangle is the intersection of all clip rectangles set by current thread.
+     * The method sets the clippping rectangle for the current thread. All the
+     * output operations, that are performed by this thread after a call of this
+     * method, will paint only within the clip rectangle. If other clips were set
+     * before this, then the used clip rectangle is the intersection of all clip
+     * rectangles set by current thread.
      *
      * @param clipRect clip rectangle to be set
      */
@@ -110,7 +113,8 @@ public enum Toolkit {
             dirFolder.mkdirs();
         }
 
-        // -----------------ffmpeg executable export on disk.-----------------------------
+        // -----------------ffmpeg executable export on
+        // disk.-----------------------------
         String suffix = isWindows ? ".dll" : (isMac ? "-osx.so" : ".so");
         String arch = System.getProperty("os.arch");
 
@@ -161,7 +165,7 @@ public enum Toolkit {
     /**
      * Copy a file from source to destination.
      *
-     * @param source The name of the bundled file.
+     * @param source      The name of the bundled file.
      * @param destination the destination
      * @return True if succeeded , False if not
      */
@@ -229,14 +233,16 @@ public enum Toolkit {
     }
 
     /**
-     * The method starts a new painting action, containing possible many painting operations After a call of this method
-     * endPainting must be already called, to refersh the screen.
+     * The method starts a new painting action, containing possible many painting
+     * operations After a call of this method endPainting must be already called, to
+     * refersh the screen.
      */
     public static native void startPainting();
 
     /**
-     * The method ends a new painting action, containing possible many painting operations The call of this method must
-     * already follow a call of <code>startPainting</code>
+     * The method ends a new painting action, containing possible many painting
+     * operations The call of this method must already follow a call of
+     * <code>startPainting</code>
      */
 
     public static native void endPainting();
@@ -256,7 +262,8 @@ public enum Toolkit {
     public static native int getScreenHeight();
 
     /**
-     * @return <code>true</code> if the terminal can color painting, <code>false</code>otherwise.
+     * @return <code>true</code> if the terminal can color painting,
+     *         <code>false</code>otherwise.
      */
     public static boolean hasColors() {
         return (hasColorsAsInteger() != 0);
@@ -265,21 +272,22 @@ public enum Toolkit {
     private static native int hasColorsAsInteger();
 
     /**
-     * The method initializes the jcurses library, must be called only one time before all painting and input
-     * operations.
+     * The method initializes the jcurses library, must be called only one time
+     * before all painting and input operations.
      */
     public static native void init();
 
     /**
-     * The method shuts down the jcurses library and recovers the terminal to the state before jcurses application
-     * start.
+     * The method shuts down the jcurses library and recovers the terminal to the
+     * state before jcurses application start.
      */
     public static native void shutdown();
 
     // Painting methods
 
     /**
-     * The method clears the screen and fills it with the backround color of <code>color<code>
+     * The method clears the screen and fills it with the backround color of
+     * <code>color<code>
      * 
      * @param color the color to fill the screen, only backround part is used.
      */
@@ -290,9 +298,10 @@ public enum Toolkit {
     private static native void clearScreen(short colorPairNumber, long attributes);
 
     /**
-     * The method draws a rectangle on the screen, filled with background part of <code>color</code>
+     * The method draws a rectangle on the screen, filled with background part of
+     * <code>color</code>
      * 
-     * @param rect rectangle ( that is, bounds of rectangle) to be painted
+     * @param rect  rectangle ( that is, bounds of rectangle) to be painted
      * @param color color to fill the rectangle, only background part is used
      */
     public static void drawRectangle(Rectangle rect, CharColor color) {
@@ -302,18 +311,21 @@ public enum Toolkit {
         }
         if (!rect.isEmpty()) {
             drawRectangle(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), getColorPairNumber(color),
-                __attributes[color.getColorAttribute()]);
+                    __attributes[color.getColorAttribute()]);
         }
     }
 
     /**
-     * The method draws a rectangle on the screen, filled with background part of <code>color</code>
+     * The method draws a rectangle on the screen, filled with background part of
+     * <code>color</code>
      * 
-     * @param x the x coordinate of the top left corner of the rectangle to be painted
-     * @param y the y coordinate of the top left corner of the rectangle to be painted
-     * @param width the width of the rectangle to be painted
+     * @param x       the x coordinate of the top left corner of the rectangle to be
+     *                painted
+     * @param y       the y coordinate of the top left corner of the rectangle to be
+     *                painted
+     * @param width   the width of the rectangle to be painted
      * @param heigtht the height of the rectangle to be painted
-     * @param color color to fill the rectangle, only background part is used
+     * @param color   color to fill the rectangle, only background part is used
      */
     public static void drawRectangle(int x, int y, int width, int height, CharColor color) {
         Rectangle rect = new Rectangle(x, y, width, height);
@@ -322,7 +334,7 @@ public enum Toolkit {
     }
 
     private static native void drawRectangle(int x, int y, int width, int height, short colorPairNumber,
-        long attribute);
+            long attribute);
 
     private static boolean between(int begin, int end, int pos) {
         return ((begin <= pos) && (end >= pos));
@@ -339,18 +351,18 @@ public enum Toolkit {
             result = new LinePart(begin, end, alignment);
         } else {
             if ((alignment == VERTICAL)
-                && (!between(clipRect.getX(), clipRect.getX() + clipRect.getWidth() - 1, position))) {
+                    && (!between(clipRect.getX(), clipRect.getX() + clipRect.getWidth() - 1, position))) {
                 result = new LinePart();
             } else if ((alignment == HORIZONTAL)
-                && (!between(clipRect.getY(), clipRect.getY() + clipRect.getHeight() - 1, position))) {
+                    && (!between(clipRect.getY(), clipRect.getY() + clipRect.getHeight() - 1, position))) {
                 result = new LinePart();
             } else {
                 if (alignment == VERTICAL) {
                     result = new LinePart(Math.max(clipRect.getY(), begin),
-                        Math.min(clipRect.getY() + clipRect.getHeight() - 1, end), alignment);
+                            Math.min(clipRect.getY() + clipRect.getHeight() - 1, end), alignment);
                 } else {
                     result = new LinePart(Math.max(clipRect.getX(), begin),
-                        Math.min(clipRect.getX() + clipRect.getWidth() - 1, end), alignment);
+                            Math.min(clipRect.getX() + clipRect.getWidth() - 1, end), alignment);
                 }
             }
         }
@@ -362,49 +374,49 @@ public enum Toolkit {
      * 
      * @param startX the x coordinate of the start point
      * @param startY the y coordinate of the start point
-     * @param endX the x coordinate of the end point
+     * @param endX   the x coordinate of the end point
      */
     public static void drawHorizontalThickLine(int startX, int startY, int endX, CharColor color) {
         LinePart part = getLinePart(startX, endX, HORIZONTAL, startY, getCurrentClipRectangle());
         if (!part.isEmpty()) {
             drawHorizontalThickLine(part._begin, startY, part._end, getColorPairNumber(color),
-                __attributes[color.getColorAttribute()]);
+                    __attributes[color.getColorAttribute()]);
         }
     }
 
     private static native void drawHorizontalThickLine(int startX, int startY, int endX, short colorPairNumber,
-        long attr);
+            long attr);
 
     /**
      * The method draws a vertical thick line
      * 
      * @param startX the x coordinate of the start point
      * @param startY the y coordinate of the start point
-     * @param endY the y coordinate of the end point
+     * @param endY   the y coordinate of the end point
      */
     public static void drawVerticalThickLine(int startX, int startY, int endY, CharColor color) {
         LinePart part = getLinePart(startY, endY, VERTICAL, startX, getCurrentClipRectangle());
         if (!part.isEmpty()) {
             drawVerticalThickLine(startX, part._begin, part._end, getColorPairNumber(color),
-                __attributes[color.getColorAttribute()]);
+                    __attributes[color.getColorAttribute()]);
         }
     }
 
     private static native void drawVerticalThickLine(int startX, int startY, int endY, short colorPairNumber,
-        long attr);
+            long attr);
 
     /**
      * The method draws a horizontal line
      * 
      * @param startX the x coordinate of the start point
      * @param startY the y coordinate of the start point
-     * @param endX the x coordinate of the end point
+     * @param endX   the x coordinate of the end point
      */
     public static void drawHorizontalLine(int startX, int startY, int endX, CharColor color) {
         LinePart part = getLinePart(startX, endX, HORIZONTAL, startY, getCurrentClipRectangle());
         if (!part.isEmpty()) {
             drawHorizontalLine(part._begin, startY, part._end, getColorPairNumber(color),
-                __attributes[color.getColorAttribute()]);
+                    __attributes[color.getColorAttribute()]);
         }
     }
 
@@ -415,13 +427,13 @@ public enum Toolkit {
      * 
      * @param startX the x coordinate of the start point
      * @param startY the y coordinate of the start point
-     * @param endY the y coordinate of the end point
+     * @param endY   the y coordinate of the end point
      */
     public static void drawVerticalLine(int startX, int startY, int endY, CharColor color) {
         LinePart part = getLinePart(startY, endY, VERTICAL, startX, getCurrentClipRectangle());
         if (!part.isEmpty()) {
             drawVerticalLine(startX, part._begin, part._end, getColorPairNumber(color),
-                __attributes[color.getColorAttribute()]);
+                    __attributes[color.getColorAttribute()]);
         }
     }
 
@@ -462,16 +474,19 @@ public enum Toolkit {
 
     /**
      * 
-     * The method draws a corner. The corner cann't have only one long side and the othe side empty. In such case
-     * drawLine must be user followed by painting a sidelos corner.
+     * The method draws a corner. The corner cann't have only one long side and the
+     * othe side empty. In such case drawLine must be user followed by painting a
+     * sidelos corner.
      * 
-     * @param startX the x coordinate of the start point
-     * @param startY the y coordinate of the start point
-     * @param endX the x coordinate of the end point
-     * @param endY the y coordinate of the end point
-     * @param alignment this parameter states, whether the line, that connects the start point with end point, lies
-     *            <bold>UNDER</bold> the corner point (alignment == 0 ) or <bold>OVER</bold> (alignment == 1), or the
-     *            corner char, if the corner has no sides, it.
+     * @param startX    the x coordinate of the start point
+     * @param startY    the y coordinate of the start point
+     * @param endX      the x coordinate of the end point
+     * @param endY      the y coordinate of the end point
+     * @param alignment this parameter states, whether the line, that connects the
+     *                  start point with end point, lies <bold>UNDER</bold> the
+     *                  corner point (alignment == 0 ) or <bold>OVER</bold>
+     *                  (alignment == 1), or the corner char, if the corner has no
+     *                  sides, it.
      * @color the color attributes for of the corner
      * 
      */
@@ -479,7 +494,7 @@ public enum Toolkit {
         Rectangle clipRect = getCurrentClipRectangle();
         if ((clipRect == null)) {
             drawCorner(startX, startY, endX, endY, getColorPairNumber(color), __attributes[color.getColorAttribute()],
-                alignment);
+                    alignment);
         } else {
             Point center = getCornerCenterPoint(startX, startY, endX, endY, alignment);
             if ((alignment == CORNER_UNDER_LINE) || (alignment == CORNER_OVER_LINE)) {
@@ -504,11 +519,11 @@ public enum Toolkit {
             if (clipRect.inside(center.x, center.y)) {
                 if ((alignment != CORNER_UNDER_LINE) && (alignment != CORNER_OVER_LINE)) {
                     drawCorner(center.x, center.y, center.x, center.y, getColorPairNumber(color),
-                        __attributes[color.getColorAttribute()], alignment);
+                            __attributes[color.getColorAttribute()], alignment);
                 } else {
                     short newAlignment = getCornerChar(startX, startY, endX, endY, alignment);
                     drawCorner(center.x, center.y, center.x, center.y, getColorPairNumber(color),
-                        __attributes[color.getColorAttribute()], newAlignment);
+                            __attributes[color.getColorAttribute()], newAlignment);
                 }
             }
 
@@ -517,12 +532,12 @@ public enum Toolkit {
     }
 
     private static native void drawCorner(int startX, int startY, int endX, int endY, short colorPairNumber, long attr,
-        short alignment);
+            short alignment);
 
     /**
      * The method draws a border ( empty rectangle )
      * 
-     * @param rect bounds of the border to be painted
+     * @param rect  bounds of the border to be painted
      * @param color color attributes of the border
      */
     public static void drawBorder(Rectangle rect, CharColor color) {
@@ -532,11 +547,13 @@ public enum Toolkit {
     /**
      * The method draws a border on the screen.
      * 
-     * @param x the x coordinate of the top left corner of the border to be painted
-     * @param y the y coordinate of the top left corner of the border to be painted
-     * @param width the width of the border to be painted
+     * @param x       the x coordinate of the top left corner of the border to be
+     *                painted
+     * @param y       the y coordinate of the top left corner of the border to be
+     *                painted
+     * @param width   the width of the border to be painted
      * @param heigtht the height of the border to be painted
-     * @param color color attributes of the border
+     * @param color   color attributes of the border
      */
     public static void drawBorder(int x, int y, int width, int height, CharColor color) {
         drawCorner(x + 1, y, x + width - 1, y + height - 2, color, CORNER_UNDER_LINE);
@@ -575,10 +592,10 @@ public enum Toolkit {
     /**
      * The method prints a string on the screen
      * 
-     * @param text string to be printed
-     * @param rectangle the rectangle, within which the string must lie. If the string doesn't fit within the rectangle
-     *            it will be broken.
-     * @param colr attributes of the string
+     * @param text      string to be printed
+     * @param rectangle the rectangle, within which the string must lie. If the
+     *                  string doesn't fit within the rectangle it will be broken.
+     * @param colr      attributes of the string
      */
     public static void printString(String text, Rectangle rect, CharColor color) {
         Rectangle clipRect = getCurrentClipRectangle();
@@ -606,7 +623,7 @@ public enum Toolkit {
 
         }
         printString(bytes, rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), getColorPairNumber(color),
-            __attributes[color.getColorAttribute()]);
+                __attributes[color.getColorAttribute()]);
     }
 
     private static List getLines(String text, int maxWidth) {
@@ -666,9 +683,9 @@ public enum Toolkit {
     /**
      * The method prints a string on the screen
      * 
-     * @param text string to be printed
-     * @param x the x coordinate of the string start point
-     * @param y the y coordinate of the string start point
+     * @param text  string to be printed
+     * @param x     the x coordinate of the string start point
+     * @param y     the y coordinate of the string start point
      * @param color color attributes of the string
      */
     public static void printString(String text, int x, int y, CharColor color) {
@@ -676,15 +693,15 @@ public enum Toolkit {
     }
 
     /**
-     * The method prints a string on the screen. If the string doesn't fit within the rectangle bounds, it wiil be
-     * broken.
+     * The method prints a string on the screen. If the string doesn't fit within
+     * the rectangle bounds, it wiil be broken.
      * 
-     * @param text string to be printed
-     * @param x the x coordinate of the string start point
-     * @param y the y coordinate of the string start point
-     * @param width the width of bounds rectangle
+     * @param text   string to be printed
+     * @param x      the x coordinate of the string start point
+     * @param y      the y coordinate of the string start point
+     * @param width  the width of bounds rectangle
      * @param height the width of bounds rectangle
-     * @param color color attributes of the string
+     * @param color  color attributes of the string
      */
     public static void printString(String text, int x, int y, int width, int height, CharColor color) {
         Rectangle rect = new Rectangle(x, y, width, height);
@@ -692,13 +709,13 @@ public enum Toolkit {
     }
 
     private static native void printString(byte[] chars, int x, int y, int width, int height, short colorPairNumber,
-        long attr);
+            long attr);
 
     private static byte[] __bytes = new byte[1];
 
     /**
-     * The method reads the next code (ascii or control ) fro input stream an wraps it into an instance of
-     * {@link jcurses.system.InputChar}
+     * The method reads the next code (ascii or control ) fro input stream an wraps
+     * it into an instance of {@link jcurses.system.InputChar}
      * 
      * @return the next read code
      */
@@ -712,10 +729,11 @@ public enum Toolkit {
     static native int getSpecialKeyCode(int code);
 
     /**
-     * The method change the background and the foreground colors of an given rectangle on the schreen
+     * The method change the background and the foreground colors of an given
+     * rectangle on the schreen
      * 
      * @param rectangle rectangle, whose colors are to be changed
-     * @param colors new colors
+     * @param colors    new colors
      */
     public static void changeColors(Rectangle rect, CharColor color) {
         Rectangle clipRect = getCurrentClipRectangle();
@@ -724,25 +742,25 @@ public enum Toolkit {
         }
         if (!rect.isEmpty()) {
             changeColors(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(), getColorPairNumber(color),
-                __attributes[color.getColorAttribute()]);
+                    __attributes[color.getColorAttribute()]);
         }
     }
 
     private native static void changeColors(int x, int y, int width, int height, short colorPairNumber, long attr);
 
     /**
-     * The method to make an audio alert. Works only with terminals, that support 'beeps', under windows currently does
-     * nothing.
+     * The method to make an audio alert. Works only with terminals, that support
+     * 'beeps', under windows currently does nothing.
      */
     public native static void beep();
 }
 
 class LinePart {
 
-    int _begin     = -1;
-    int _end       = -2;
+    int _begin = -1;
+    int _end = -2;
     int _alignment = -1;
-    int _position  = -1;
+    int _position = -1;
 
     public LinePart() {
     }

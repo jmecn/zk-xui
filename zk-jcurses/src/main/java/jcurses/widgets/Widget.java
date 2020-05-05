@@ -11,14 +11,19 @@ import jcurses.system.InputChar;
 import jcurses.util.Rectangle;
 
 /**
- * This class is superclass for all jcurses widgets. For implementing a ne widget you must derive it.
+ * This class is superclass for all jcurses widgets. For implementing a ne
+ * widget you must derive it.
  * 
- * An jcurses widget is already used within a window. Its task ist to help it's <code>WidgetContainer</code> to layout
- * itself, giving needed informations, to paint itself and to handle input. Handling input is needed only, if the widget
- * has is an input widget ( examples are text input widget, list widget) and has currently focus, that is is selected by
- * user to handle input. This selectig ocurrs by typing a special key (currenty 'tab') to switch between input widgets.
+ * An jcurses widget is already used within a window. Its task ist to help it's
+ * <code>WidgetContainer</code> to layout itself, giving needed informations, to
+ * paint itself and to handle input. Handling input is needed only, if the
+ * widget has is an input widget ( examples are text input widget, list widget)
+ * and has currently focus, that is is selected by user to handle input. This
+ * selectig ocurrs by typing a special key (currenty 'tab') to switch between
+ * input widgets.
  * 
- * All widgets are ordered in a hierarchy. An widget is already has a container, if it isn't the root pane of a window.
+ * All widgets are ordered in a hierarchy. An widget is already has a container,
+ * if it isn't the root pane of a window.
  */
 public abstract class Widget {
 
@@ -35,7 +40,8 @@ public abstract class Widget {
     }
 
     /**
-     * Sets widget's container. Is called by framework, schouldn't be called writing applications
+     * Sets widget's container. Is called by framework, schouldn't be called writing
+     * applications
      * 
      * @param parent new container
      */
@@ -44,7 +50,8 @@ public abstract class Widget {
     }
 
     /**
-     * /** Sets widget's window. Is called by framework, schouldn't be called writing applications
+     * /** Sets widget's window. Is called by framework, schouldn't be called
+     * writing applications
      * 
      * @param window widget's window
      */
@@ -63,12 +70,13 @@ public abstract class Widget {
         }
     }
 
-    private int       _x = 0;
-    private int       _y = 0;
+    private int _x = 0;
+    private int _y = 0;
     private Rectangle _size;
 
     /**
-     * Sets the x coordinate within the container. Is called by framework, schouldn't be called writing applications
+     * Sets the x coordinate within the container. Is called by framework,
+     * schouldn't be called writing applications
      * 
      * @param x x coordinate within the container
      */
@@ -101,7 +109,8 @@ public abstract class Widget {
     }
 
     /**
-     * Sets the y coordinate within the container. Is called by framework, schouldn't be called writing applications
+     * Sets the y coordinate within the container. Is called by framework,
+     * schouldn't be called writing applications
      * 
      * @param y y coordinate within the container
      */
@@ -163,8 +172,8 @@ public abstract class Widget {
     }
 
     /**
-     * This method gives the widget container the infomation about the preferred size of this widget. Must be
-     * implemented by derived classes.
+     * This method gives the widget container the infomation about the preferred
+     * size of this widget. Must be implemented by derived classes.
      */
 
     protected abstract Rectangle getPreferredSize();
@@ -180,8 +189,8 @@ public abstract class Widget {
     }
 
     /**
-     * This method paints the widget. Will be called by <code>paint()<code>, only if the widget is visible. Must be
-     * implemented be derived classes.
+     * This method paints the widget. Will be called by <code>paint()<code>, only if
+     * the widget is visible. Must be implemented be derived classes.
      */
     protected abstract void doPaint();
 
@@ -195,13 +204,14 @@ public abstract class Widget {
     }
 
     /**
-     * This method repaints the widget. Will be called by <code>paint()<code>, only if the widget is visible. Must be
-     * implemented be derived classes.
+     * This method repaints the widget. Will be called by <code>paint()<code>, only
+     * if the widget is visible. Must be implemented be derived classes.
      */
     protected abstract void doRepaint();
 
     /**
-     * The method declares, whether the widget can handle input ( get focus ), that is, whether this is an input widget.
+     * The method declares, whether the widget can handle input ( get focus ), that
+     * is, whether this is an input widget.
      * 
      * @return true, if the widget can handle input, in other case false
      */
@@ -213,7 +223,8 @@ public abstract class Widget {
     private boolean _focus = false;
 
     /**
-     * @return true, if the widget has currenty focus,that is handles input, in othe case false
+     * @return true, if the widget has currenty focus,that is handles input, in othe
+     *         case false
      */
     public boolean hasFocus() {
         return _focus;
@@ -230,7 +241,8 @@ public abstract class Widget {
     }
 
     /**
-     * The method is called by framework if focus is switched,that is, either the widget has get or lost focus.
+     * The method is called by framework if focus is switched,that is, either the
+     * widget has get or lost focus.
      * 
      * @param value true, if the widget has get focus, in other case false
      */
@@ -245,8 +257,9 @@ public abstract class Widget {
     }
 
     /**
-     * The method is called bei <code>setFocus</code> to tell widget, thas it has get focus. This method schold be
-     * overrided bei derived class to react getting focus, for examlple to repaint widget gettig focus.
+     * The method is called bei <code>setFocus</code> to tell widget, thas it has
+     * get focus. This method schold be overrided bei derived class to react getting
+     * focus, for examlple to repaint widget gettig focus.
      */
 
     protected void focus() {
@@ -254,15 +267,16 @@ public abstract class Widget {
     }
 
     /**
-     * The method is called bei <code>setFocus</code> to tell widget, thas it has lost focus. This method schold be
-     * overrided bei derived class to react losing focus, for examlple to repaint widget losing focus.
+     * The method is called bei <code>setFocus</code> to tell widget, thas it has
+     * lost focus. This method schold be overrided bei derived class to react losing
+     * focus, for examlple to repaint widget losing focus.
      */
     protected void unfocus() {
     }
 
     /**
-     * The method is called by framework to let the widget handle an input char. Schould be overrided be derived
-     * classes, if these can handle input.
+     * The method is called by framework to let the widget handle an input char.
+     * Schould be overrided be derived classes, if these can handle input.
      * 
      * @return true, if the widget has handled the char, false in other case
      */
@@ -272,10 +286,12 @@ public abstract class Widget {
     }
 
     /**
-     * This method returns a list of short cut chars, that the widget want to handle. If a char from the list is typed
-     * by user, it will be handled always my this widget not bei the widget currenty having focus, except the having
-     * focus widget handles ALL chars and tells this throuth the method <code>handleAllPrintableChars</code>. To enable
-     * shortcuts for a new widget, you must override this method.
+     * This method returns a list of short cut chars, that the widget want to
+     * handle. If a char from the list is typed by user, it will be handled always
+     * my this widget not bei the widget currenty having focus, except the having
+     * focus widget handles ALL chars and tells this throuth the method
+     * <code>handleAllPrintableChars</code>. To enable shortcuts for a new widget,
+     * you must override this method.
      */
 
     protected Vector getShortCutsList() {
@@ -283,7 +299,8 @@ public abstract class Widget {
     }
 
     /**
-     * Methoden, die Sichtbarkeit regeln. Ein widget ist dann sichtbar wenn er UND sein Parent sichtbar sind
+     * Methoden, die Sichtbarkeit regeln. Ein widget ist dann sichtbar wenn er UND
+     * sein Parent sichtbar sind
      */
 
     private boolean _visible = true;
@@ -298,9 +315,10 @@ public abstract class Widget {
     }
 
     /**
-     * The method returns true, if the visibility flag of the widget is true. This doesn't mean that the widget ist
-     * currently visible, because the parent whole window can be unvisible, use the method <code>isVisible</code> to
-     * query the visisbility
+     * The method returns true, if the visibility flag of the widget is true. This
+     * doesn't mean that the widget ist currently visible, because the parent whole
+     * window can be unvisible, use the method <code>isVisible</code> to query the
+     * visisbility
      * 
      * @return true, if the visibility flag is set, false otherwise
      */
@@ -328,7 +346,8 @@ public abstract class Widget {
     private static CharColor __defaultColors = new CharColor(CharColor.WHITE, CharColor.WHITE);
 
     /**
-     * @return default colors for this widget. What this mentiones in a concret case, is dependent on the derived class.
+     * @return default colors for this widget. What this mentiones in a concret
+     *         case, is dependent on the derived class.
      */
     protected CharColor getDefaultColors() {
         return __defaultColors;

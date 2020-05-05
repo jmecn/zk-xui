@@ -3,17 +3,18 @@ package jcurses.widgets;
 import jcurses.util.Rectangle;
 
 /******************************************************
- * This class is a layout manager that works like as the <code>DefaultLayoutManager</code> with an difference: the
- * painting rectangle is shared in many grid cells and the constraints are stated not in real coodinates on the painting
- * rectangle, but in 'grid-coordinates'
+ * This class is a layout manager that works like as the
+ * <code>DefaultLayoutManager</code> with an difference: the painting rectangle
+ * is shared in many grid cells and the constraints are stated not in real
+ * coodinates on the painting rectangle, but in 'grid-coordinates'
  */
 
 public class GridLayoutManager implements LayoutManager, WidgetsConstants {
 
     private DefaultLayoutManager _defLayout = new DefaultLayoutManager();
-    private WidgetContainer      _father    = null;
+    private WidgetContainer _father = null;
 
-    private int _width  = 0;
+    private int _width = 0;
     private int _height = 0;
 
     private Grid _grid = null;
@@ -32,7 +33,7 @@ public class GridLayoutManager implements LayoutManager, WidgetsConstants {
     /**
      * The constructor
      * 
-     * @param width the width of the grid ( in cells )
+     * @param width  the width of the grid ( in cells )
      * @param height the height of the grid ( in cells )
      * 
      */
@@ -55,20 +56,26 @@ public class GridLayoutManager implements LayoutManager, WidgetsConstants {
     /**
      * Adds a widget to the boundeb container
      * 
-     * @param widget widget to be added
-     * @param x the x coordinate of the top left corner of the rectangle, within that the widget is placed
-     * @param y the y coordinate of the top left corner of the rectangle, within that the widget is placed
-     * @param width the width of the rectangle, within that the widget is placed
-     * @param height the hight of the rectangle, within that the widget is placed
-     * @param verticalConstraint vertical alignment constraint. Following values a possible:
-     *            <code>WidgetConstraints.ALIGNMENT_CENTER</code>,<code>WidgetConstraints.ALIGNMENT_TOP</code>,<code>WidgetConstraints.ALIGNMENT_BOTTOM</code>
-     * @param horizontalConstraint vertical alignment constraint, Following values are possible: *
-     *            <code>WidgetConstraints.ALIGNMENT_CENTER</code>,<code>WidgetConstraints.ALIGNMENT_LEFT</code>,<code>WidgetConstraints.ALIGNMENT_RIGHT</code>
+     * @param widget               widget to be added
+     * @param x                    the x coordinate of the top left corner of the
+     *                             rectangle, within that the widget is placed
+     * @param y                    the y coordinate of the top left corner of the
+     *                             rectangle, within that the widget is placed
+     * @param width                the width of the rectangle, within that the
+     *                             widget is placed
+     * @param height               the hight of the rectangle, within that the
+     *                             widget is placed
+     * @param verticalConstraint   vertical alignment constraint. Following values a
+     *                             possible:
+     *                             <code>WidgetConstraints.ALIGNMENT_CENTER</code>,<code>WidgetConstraints.ALIGNMENT_TOP</code>,<code>WidgetConstraints.ALIGNMENT_BOTTOM</code>
+     * @param horizontalConstraint vertical alignment constraint, Following values
+     *                             are possible: *
+     *                             <code>WidgetConstraints.ALIGNMENT_CENTER</code>,<code>WidgetConstraints.ALIGNMENT_LEFT</code>,<code>WidgetConstraints.ALIGNMENT_RIGHT</code>
      */
     public void addWidget(Widget widget, int x, int y, int width, int height, int verticalConstraint,
-        int horizontalConstraint) {
+            int horizontalConstraint) {
         _father.addWidget(widget,
-            new GridLayoutConstraint(x, y, width, height, horizontalConstraint, verticalConstraint));
+                new GridLayoutConstraint(x, y, width, height, horizontalConstraint, verticalConstraint));
 
     }
 
@@ -85,12 +92,12 @@ public class GridLayoutManager implements LayoutManager, WidgetsConstants {
 
 class GridLayoutConstraint {
 
-    int x                    = 0;
-    int y                    = 0;
-    int width                = 0;
-    int height               = 0;
+    int x = 0;
+    int y = 0;
+    int width = 0;
+    int height = 0;
     int horizontalConstraint = 0;
-    int verticalConstraint   = 0;
+    int verticalConstraint = 0;
 
     GridLayoutConstraint(int x, int y, int width, int height, int horizontalConstraint, int verticalConstraint) {
         this.x = x;
@@ -105,7 +112,7 @@ class GridLayoutConstraint {
 
         Rectangle rect = grid.getRectangle(x, y, width, height);
         return new DefaultLayoutConstraint(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight(),
-            horizontalConstraint, verticalConstraint);
+                horizontalConstraint, verticalConstraint);
 
     }
 
@@ -119,7 +126,7 @@ class Grid {
     Grid(Rectangle rect, int width, int height) {
         if (((rect.getWidth() / width) < 1) || ((rect.getHeight() / height) < 1)) {
             throw new RuntimeException(
-                " the grid is to fine: " + rect.getWidth() + ":" + rect.getHeight() + ":" + width + ":" + height);
+                    " the grid is to fine: " + rect.getWidth() + ":" + rect.getHeight() + ":" + width + ":" + height);
         }
 
         _widths = new int[width];
@@ -147,7 +154,7 @@ class Grid {
 
     Rectangle getRectangle(int x, int y, int width, int height) {
         return new Rectangle(getWidth(_widths, 0, x), getWidth(_heights, 0, y), getWidth(_widths, x, x + width),
-            getWidth(_heights, y, y + height));
+                getWidth(_heights, y, y + height));
 
     }
 

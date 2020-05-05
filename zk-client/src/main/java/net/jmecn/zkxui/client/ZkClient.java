@@ -108,7 +108,8 @@ public class ZkClient {
             defaultAcl = ZooDefs.Ids.OPEN_ACL_UNSAFE;
             return;
         }
-        // Don't let things happen in a half-baked state, build the new ACL and then set it into
+        // Don't let things happen in a half-baked state, build the new ACL and then set
+        // it into
         // defaultAcl
         ArrayList<ACL> newDefault = new ArrayList<>();
         try {
@@ -121,26 +122,26 @@ public class ZkClient {
                 String permStr = ((String) acl.get("perms")).toLowerCase().trim();
                 for (char c : permStr.toCharArray()) {
                     switch (c) {
-                        case 'a':
-                            perms += ZooDefs.Perms.ADMIN;
-                            break;
-                        case 'c':
-                            perms += ZooDefs.Perms.CREATE;
-                            break;
-                        case 'd':
-                            perms += ZooDefs.Perms.DELETE;
-                            break;
-                        case 'r':
-                            perms += ZooDefs.Perms.READ;
-                            break;
-                        case 'w':
-                            perms += ZooDefs.Perms.WRITE;
-                            break;
-                        case '*':
-                            perms += ZooDefs.Perms.ALL;
-                            break;
-                        default:
-                            throw new RuntimeException("Illegal permission character in ACL " + c);
+                    case 'a':
+                        perms += ZooDefs.Perms.ADMIN;
+                        break;
+                    case 'c':
+                        perms += ZooDefs.Perms.CREATE;
+                        break;
+                    case 'd':
+                        perms += ZooDefs.Perms.DELETE;
+                        break;
+                    case 'r':
+                        perms += ZooDefs.Perms.READ;
+                        break;
+                    case 'w':
+                        perms += ZooDefs.Perms.WRITE;
+                        break;
+                    case '*':
+                        perms += ZooDefs.Perms.ALL;
+                        break;
+                    default:
+                        throw new RuntimeException("Illegal permission character in ACL " + c);
                     }
                 }
                 newDefault.add(new ACL(perms, new Id(scheme, id)));
@@ -160,7 +161,7 @@ public class ZkClient {
         for (LeafBean leaf : leaves) {
             String leafValue = externalizeNodeValue(leaf.getValue());
             if (leaf.getPath().contains(searchString) || leaf.getName().contains(searchString)
-                || leafValue.contains(searchString)) {
+                    || leafValue.contains(searchString)) {
                 searchResult.add(leaf);
             }
         }
@@ -191,8 +192,7 @@ public class ZkClient {
         }
     }
 
-    public void importData(List<String> importFile, Boolean overwrite)
-        throws InterruptedException, KeeperException {
+    public void importData(List<String> importFile, Boolean overwrite) throws InterruptedException, KeeperException {
 
         for (String line : importFile) {
             log.debug("Importing line " + line);
@@ -228,7 +228,7 @@ public class ZkClient {
                         setPropertyValue(path, name, value);
                     } else {
                         log.debug("Skipping update for existing property " + path + "/" + name
-                            + " as overwrite is not enabled!");
+                                + " as overwrite is not enabled!");
                     }
                 }
 
@@ -242,7 +242,7 @@ public class ZkClient {
     }
 
     private void createPathAndNode(String path, String name, byte[] data, boolean force)
-        throws InterruptedException, KeeperException {
+            throws InterruptedException, KeeperException {
         log.debug("add entry, path={}, name={}, value={}", path, name, Arrays.toString(data));
         // 1. Create path nodes if necessary
         StringBuilder currPath = new StringBuilder();
@@ -263,7 +263,7 @@ public class ZkClient {
     }
 
     private void createIfDoesntExist(String path, byte[] data, boolean force)
-        throws InterruptedException, KeeperException {
+            throws InterruptedException, KeeperException {
         try {
             zk.create(path, data, defaultAcl(), CreateMode.PERSISTENT);
         } catch (KeeperException ke) {
@@ -370,7 +370,8 @@ public class ZkClient {
     }
 
     public LeafBean getNodeValue(String path, String childPath, String child) {
-        // Reason exception is caught here is so that lookup can continue to happen if a particular property is not
+        // Reason exception is caught here is so that lookup can continue to happen if a
+        // particular property is not
         // found at parent level.
         try {
             log.trace("Lookup: path=" + path + ",childPath=" + childPath + ",child=" + child);
@@ -390,11 +391,11 @@ public class ZkClient {
     }
 
     public void createFolder(String folderPath, String propertyName, String propertyValue)
-        throws KeeperException, InterruptedException {
+            throws KeeperException, InterruptedException {
         log.debug("Creating folder " + folderPath + " with property " + propertyName + " and value " + propertyValue);
         zk.create(folderPath, "".getBytes(), defaultAcl(), CreateMode.PERSISTENT);
         zk.create(folderPath + "/" + propertyName, propertyValue == null ? null : propertyValue.getBytes(),
-            defaultAcl(), CreateMode.PERSISTENT);
+                defaultAcl(), CreateMode.PERSISTENT);
 
     }
 
@@ -438,7 +439,7 @@ public class ZkClient {
         zk.delete(path, -1);
         log.debug("delete entry:{}", path);
     }
-    
+
     public void closeZooKeeper() {
         closeZooKeeper(zk);
     }

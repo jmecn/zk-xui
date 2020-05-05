@@ -11,8 +11,9 @@ import jcurses.system.Toolkit;
 import jcurses.util.Rectangle;
 
 /**
- * This class implements a popup list. Such list has always one of the items selected and gives the possibility to
- * change this selection ( througth an popup menu that is shown, if the user typed 'enter')
+ * This class implements a popup list. Such list has always one of the items
+ * selected and gives the possibility to change this selection ( througth an
+ * popup menu that is shown, if the user typed 'enter')
  * 
  */
 public class PopUpList extends Widget {
@@ -29,9 +30,9 @@ public class PopUpList extends Widget {
         return __popUpDefaultColors;
     }
 
-    private static CharColor __focusedPopUpDefaultColors =
-        new CharColor(CharColor.BLUE, CharColor.WHITE, CharColor.REVERSE);
-    private CharColor        _focusedPopUpColors         = getFocusedPopUpDefaultColors();
+    private static CharColor __focusedPopUpDefaultColors = new CharColor(CharColor.BLUE, CharColor.WHITE,
+            CharColor.REVERSE);
+    private CharColor _focusedPopUpColors = getFocusedPopUpDefaultColors();
 
     private CharColor getFocusedPopUpDefaultColors() {
         return __focusedPopUpDefaultColors;
@@ -70,7 +71,7 @@ public class PopUpList extends Widget {
      * Adds an item at the specified position
      * 
      * @param item the item to add
-     * @param pos position
+     * @param pos  position
      */
     public void add(int pos, String item) {
         _items.add(pos, item);

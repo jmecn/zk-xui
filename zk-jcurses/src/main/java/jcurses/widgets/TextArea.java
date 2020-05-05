@@ -14,10 +14,12 @@ public class TextArea extends TextComponent implements IScrollable {
     /**
      * The constructor
      * 
-     * @param width the preferred width of the component. If -1 is stated, there is no preferred width and the component
-     *            is layouted dependend on the container and the text
-     * @param height the preferred height of the component. If -1 is stated, there is no preferred width and the
-     *            component is layouted dependend on the container.
+     * @param width  the preferred width of the component. If -1 is stated, there is
+     *               no preferred width and the component is layouted dependend on
+     *               the container and the text
+     * @param height the preferred height of the component. If -1 is stated, there
+     *               is no preferred width and the component is layouted dependend
+     *               on the container.
      * @text the initial text, if <code>null<code> the component is empty
      * 
      */
@@ -29,10 +31,12 @@ public class TextArea extends TextComponent implements IScrollable {
     /**
      * The constructor
      * 
-     * @param width the preferred width of the component. If -1 is stated, there is no preferred width and the component
-     *            is layouted dependend on the container and the text
-     * @param height the preferred height of the component. If -1 is stated, there is no preferred width and the
-     *            component is layouted dependend on the container.
+     * @param width  the preferred width of the component. If -1 is stated, there is
+     *               no preferred width and the component is layouted dependend on
+     *               the container and the text
+     * @param height the preferred height of the component. If -1 is stated, there
+     *               is no preferred width and the component is layouted dependend
+     *               on the container.
      * 
      */
     public TextArea(int width, int height) {
@@ -63,8 +67,8 @@ public class TextArea extends TextComponent implements IScrollable {
         _borderColors = colors;
     }
 
-    private static CharColor __scrollbarDefaultColors =
-        new CharColor(CharColor.BLACK, CharColor.WHITE, CharColor.REVERSE);
+    private static CharColor __scrollbarDefaultColors = new CharColor(CharColor.BLACK, CharColor.WHITE,
+            CharColor.REVERSE);
 
     private CharColor _scrollbarColors = getScrollbarDefaultColors();
 
@@ -111,32 +115,39 @@ public class TextArea extends TextComponent implements IScrollable {
     // Scrollbars
 
     /*
-     * private void drawVerticalScrollbar() { Rectangle rect = (Rectangle)getSize().clone();
-     * rect.setLocation(getAbsoluteX(), getAbsoluteY());
+     * private void drawVerticalScrollbar() { Rectangle rect =
+     * (Rectangle)getSize().clone(); rect.setLocation(getAbsoluteX(),
+     * getAbsoluteY());
      * 
-     * int visibleTextWidth = rect.getWidth()-2; int visibleTextHeight = rect.getHeight()-2;
+     * int visibleTextWidth = rect.getWidth()-2; int visibleTextHeight =
+     * rect.getHeight()-2;
      * 
-     * if ((getTextHeight()>0) &&(getTextHeight() > visibleTextHeight)) { float firstPart =
-     * ((float)getTextY())/((float)getTextHeight()); float lastPart =
-     * ((float)(getTextHeight()-visibleTextHeight-getTextY()))/((float)getTextHeight());
-     * ScrollbarUtils.drawScrollBar(rect.getY()+1,rect.getY()+rect.getHeight()-2, rect.getX()+rect.getWidth()-1,
-     * firstPart, lastPart, ScrollbarUtils.VERTICAL); }
+     * if ((getTextHeight()>0) &&(getTextHeight() > visibleTextHeight)) { float
+     * firstPart = ((float)getTextY())/((float)getTextHeight()); float lastPart =
+     * ((float)(getTextHeight()-visibleTextHeight-getTextY()))/((float)getTextHeight
+     * ());
+     * ScrollbarUtils.drawScrollBar(rect.getY()+1,rect.getY()+rect.getHeight()-2,
+     * rect.getX()+rect.getWidth()-1, firstPart, lastPart, ScrollbarUtils.VERTICAL);
+     * }
      * 
      * 
      * 
      * }
      * 
      * 
-     * private void drawHorizontalScrollbar() { Rectangle rect = (Rectangle)getSize().clone();
-     * rect.setLocation(getAbsoluteX(), getAbsoluteY());
+     * private void drawHorizontalScrollbar() { Rectangle rect =
+     * (Rectangle)getSize().clone(); rect.setLocation(getAbsoluteX(),
+     * getAbsoluteY());
      * 
-     * int visibleTextWidth = rect.getWidth()-2; int visibleTextHeight = rect.getHeight()-2;
+     * int visibleTextWidth = rect.getWidth()-2; int visibleTextHeight =
+     * rect.getHeight()-2;
      * 
-     * if ((getTextWidth()>0) &&(getTextWidth() > visibleTextWidth)) { float firstPart =
-     * ((float)getTextX())/((float)getTextWidth()); float lastPart =
-     * ((float)(getTextWidth()-visibleTextWidth-getTextX()))/((float)getTextWidth());
-     * ScrollbarUtils.drawScrollBar(rect.getX()+1,rect.getX()+rect.getWidth()-2, rect.getY()+rect.getHeight()-1,
-     * firstPart, lastPart, ScrollbarUtils.HORIZONTAL); }
+     * if ((getTextWidth()>0) &&(getTextWidth() > visibleTextWidth)) { float
+     * firstPart = ((float)getTextX())/((float)getTextWidth()); float lastPart =
+     * ((float)(getTextWidth()-visibleTextWidth-getTextX()))/((float)getTextWidth())
+     * ; ScrollbarUtils.drawScrollBar(rect.getX()+1,rect.getX()+rect.getWidth()-2,
+     * rect.getY()+rect.getHeight()-1, firstPart, lastPart,
+     * ScrollbarUtils.HORIZONTAL); }
      * 
      * 
      * 

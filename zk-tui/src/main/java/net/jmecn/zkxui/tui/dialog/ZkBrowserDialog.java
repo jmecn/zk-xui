@@ -213,8 +213,8 @@ public class ZkBrowserDialog extends Dialog implements WidgetsConstants {
         }
 
         LeafBean leaf = zkNode.getLeafBeanLSt().get(idx - 1);
-        ZkUpdatePropertyDialog dialog =
-            new ZkUpdatePropertyDialog(app.getCurrentPath(), leaf.getName(), leaf.getStrValue());
+        ZkUpdatePropertyDialog dialog = new ZkUpdatePropertyDialog(app.getCurrentPath(), leaf.getName(),
+                leaf.getStrValue());
         dialog.show();
 
         String result = dialog.getResult();
@@ -234,8 +234,7 @@ public class ZkBrowserDialog extends Dialog implements WidgetsConstants {
         }
 
         ConfirmDialog confirm = new ConfirmDialog("WARN",
-            "Are you sure to delete node[" + node + "] under the node:\n" + app.getCurrentPath(),
-            "NO", "YES");
+                "Are you sure to delete node[" + node + "] under the node:\n" + app.getCurrentPath(), "NO", "YES");
         confirm.show();
 
         if (confirm.getResult() == null || confirm.getResult()) {
@@ -255,8 +254,8 @@ public class ZkBrowserDialog extends Dialog implements WidgetsConstants {
 
         LeafBean leaf = zkNode.getLeafBeanLSt().get(idx - 1);
         ConfirmDialog confirm = new ConfirmDialog("WARN",
-            "Are you sure to delete property[" + leaf.getName() + "] under the node:\n" + app.getCurrentPath(),
-            "NO", "YES");
+                "Are you sure to delete property[" + leaf.getName() + "] under the node:\n" + app.getCurrentPath(),
+                "NO", "YES");
         confirm.show();
 
         if (confirm.getResult() == null || confirm.getResult()) {
@@ -279,8 +278,8 @@ public class ZkBrowserDialog extends Dialog implements WidgetsConstants {
 
         //
         ConfirmDialog overwriteDialog = new ConfirmDialog("INFO",
-            "Overwrite exists properties?\nOnly properties that not exists will be import if you choose 'No'.", "Yes",
-            "No");
+                "Overwrite exists properties?\nOnly properties that not exists will be import if you choose 'No'.",
+                "Yes", "No");
         overwriteDialog.show();
         if (overwriteDialog.getResult() == null) {
             return;
@@ -302,8 +301,8 @@ public class ZkBrowserDialog extends Dialog implements WidgetsConstants {
     }
 
     private void exportData() {
-        ConfirmDialog confirm =
-            new ConfirmDialog("Export", "Export this node below:\n" + app.getCurrentPath(), "Yes", "No");
+        ConfirmDialog confirm = new ConfirmDialog("Export", "Export this node below:\n" + app.getCurrentPath(), "Yes",
+                "No");
         confirm.show();
         if (confirm.getResult() == null || !confirm.getResult()) {
             return;
@@ -318,7 +317,7 @@ public class ZkBrowserDialog extends Dialog implements WidgetsConstants {
 
         if (file.exists()) {
             ConfirmDialog overwriteConfirm = new ConfirmDialog("WARN",
-                "Are you sure to overwrite the existing file?\n" + file.getAbsolutePath(), "YES", "NO");
+                    "Are you sure to overwrite the existing file?\n" + file.getAbsolutePath(), "YES", "NO");
             overwriteConfirm.show();
 
             if (overwriteConfirm.getResult() == null || !overwriteConfirm.getResult()) {

@@ -16,28 +16,28 @@ import jcurses.util.Message;
  */
 public class FileDialog extends Dialog implements WidgetsConstants, ItemListener, ActionListener {
 
-    private String _directory    = null;
-    private String _file         = null;
+    private String _directory = null;
+    private String _file = null;
     private String _filterString = null;
 
     private boolean _inRoots = false;
 
     private String _result = null;
 
-    String _ioErrorText  = "Input/Output Error is occured!";
+    String _ioErrorText = "Input/Output Error is occured!";
     String _ioErrorTitle = "I/O Error";
 
     JCursesFileFilterFactory _filterFactory = new DefaultFileFilterFactory();
 
     JCList<String> _directories = null;
-    JCList<String> _files       = null;
+    JCList<String> _files = null;
 
-    Label     _fileLabel    = null;
-    Label     _filterLabel  = null;
-    TextField _fileField    = null;
-    TextField _filterField  = null;
-    Button    _okButton     = null;
-    Button    _cancelButton = null;
+    Label _fileLabel = null;
+    Label _filterLabel = null;
+    TextField _fileField = null;
+    TextField _filterField = null;
+    Button _okButton = null;
+    Button _cancelButton = null;
 
     /**
      * The constructor
@@ -99,7 +99,7 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
      */
     public FileDialog(String title) {
         this(Toolkit.getScreenWidth() / 4, Toolkit.getScreenHeight() / 4, Toolkit.getScreenWidth() / 2,
-            Toolkit.getScreenHeight() / 2, title);
+                Toolkit.getScreenHeight() / 2, title);
     }
 
     /**
@@ -128,8 +128,8 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
     }
 
     /**
-     * Sets the text of the message, that is shown, if an i/o error is occured while the dialog tries to open a
-     * directory
+     * Sets the text of the message, that is shown, if an i/o error is occured while
+     * the dialog tries to open a directory
      * 
      * @param message i/o error message's text
      */
@@ -138,8 +138,8 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
     }
 
     /**
-     * Sets the title of the message, that is shown, if an i/o error is occured while the dialog tries to open a
-     * directory
+     * Sets the title of the message, that is shown, if an i/o error is occured
+     * while the dialog tries to open a directory
      * 
      * @param message i/o error message's text
      */
@@ -148,9 +148,10 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
     }
 
     /**
-     * Shows the i/o error message, if an i/o occcurs reading a directory. In the default implementation uses texts set
-     * with <code>setIOErrorMessageTitle</code> and <code>setIOErrorMessageText</code>. can be modified in derived
-     * classes.
+     * Shows the i/o error message, if an i/o occcurs reading a directory. In the
+     * default implementation uses texts set with
+     * <code>setIOErrorMessageTitle</code> and <code>setIOErrorMessageText</code>.
+     * can be modified in derived classes.
      */
     protected void directoryReadErrorMessage() {
         new Message(_ioErrorTitle, _ioErrorText, "OK").show();
@@ -173,8 +174,9 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
     }
 
     /**
-     * Returns the last selected file. Should be called after a return from the <code>show</code> method to read the
-     * result. If <code>null<code> is returned, no file was selected.
+     * Returns the last selected file. Should be called after a return from the
+     * <code>show</code> method to read the result. If <code>null<code> is returned,
+     * no file was selected.
      * 
      * @return selected file
      */
@@ -188,9 +190,11 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
     /**
      * Sets a filter string
      * 
-     * Sets a string used to filter the files, that are shown in selected directories. The filter string can be also
-     * modified by user. The filter string has to be in the form <prefix>*<posfix>, and matches all files, whose names
-     * start with <prefix> and end with <postfix>. Both <prefix> and <postfix> can be empty.
+     * Sets a string used to filter the files, that are shown in selected
+     * directories. The filter string can be also modified by user. The filter
+     * string has to be in the form <prefix>*<posfix>, and matches all files, whose
+     * names start with <prefix> and end with <postfix>. Both <prefix> and <postfix>
+     * can be empty.
      * 
      * @param filterString filter string
      */
@@ -284,8 +288,8 @@ public class FileDialog extends Dialog implements WidgetsConstants, ItemListener
         File directoryFile = new File(directory);
 
         if (directoryFile.isDirectory()) {
-            File[] files =
-                directoryFile.listFiles(new FileDialogFileFilter(_filterFactory.generateFileFilter(_filterString)));
+            File[] files = directoryFile
+                    .listFiles(new FileDialogFileFilter(_filterFactory.generateFileFilter(_filterString)));
             if ((directoryFile.getParentFile() != null) || (isWindows())) {
                 _directories.add("..");
             }

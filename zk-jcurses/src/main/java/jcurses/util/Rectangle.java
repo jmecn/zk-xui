@@ -1,22 +1,23 @@
 package jcurses.util;
 
 /**
- * This is a class to represent an screen rectangle. To implement this class was needed, because
- * <code>java.awt.rectangle</code> works with double's, this is by a text based terminal senseless.
+ * This is a class to represent an screen rectangle. To implement this class was
+ * needed, because <code>java.awt.rectangle</code> works with double's, this is
+ * by a text based terminal senseless.
  */
 public class Rectangle {
 
-    int _x      = 0;
-    int _y      = 0;
-    int _width  = 0;
+    int _x = 0;
+    int _y = 0;
+    int _width = 0;
     int _height = 0;
 
     /**
      * The constructor
      * 
-     * @param x the x coordinate of the top left corner
-     * @param y the y coordinate of the top left corner
-     * @param width the width of the rectangle
+     * @param x      the x coordinate of the top left corner
+     * @param y      the y coordinate of the top left corner
+     * @param width  the width of the rectangle
      * @param height the height of the rectangle
      */
     public Rectangle(int x, int y, int width, int height) {
@@ -29,7 +30,7 @@ public class Rectangle {
     /**
      * The constructor, that defines only the size but no location
      * 
-     * @param width the width of the rectangle
+     * @param width  the width of the rectangle
      * @param height the height of the rectangle
      */
     public Rectangle(int width, int height) {
@@ -102,7 +103,8 @@ public class Rectangle {
     }
 
     /**
-     * @return <code>true</code> if the rectangle is empty in other case <code>false</code>
+     * @return <code>true</code> if the rectangle is empty in other case
+     *         <code>false</code>
      */
     public boolean isEmpty() {
         return (_width <= 0) || (_height <= 0);
@@ -116,7 +118,8 @@ public class Rectangle {
      * @param W width of the rectangle, whose containment is to verify
      * @param H x height of the rectangle, whose containment is to verify
      * 
-     * @return <code>true</code> if the parameter rectangle is withhin this rectangle in other case <code>false</code>
+     * @return <code>true</code> if the parameter rectangle is withhin this
+     *         rectangle in other case <code>false</code>
      */
     public boolean contains(int X, int Y, int W, int H) {
         int width = _width;
@@ -135,15 +138,16 @@ public class Rectangle {
      * @param rect the rectangle, whose containment is to verify
      * 
      * 
-     * @return <code>true</code> if the parameter rectangle is withhin this rectangle in other case <code>false</code>
+     * @return <code>true</code> if the parameter rectangle is withhin this
+     *         rectangle in other case <code>false</code>
      */
     public boolean contains(Rectangle rect) {
         return contains(rect.getX(), rect.getY(), rect.getWidth(), rect.getHeight());
     }
 
     /**
-     * The method returns an intersection of the rectangle with an other rectangle, that is, the greatest rectangle,
-     * that is contained in both.
+     * The method returns an intersection of the rectangle with an other rectangle,
+     * that is, the greatest rectangle, that is contained in both.
      * 
      * @param r rectangle to build intersection with this rectangle
      * 
@@ -168,8 +172,8 @@ public class Rectangle {
     }
 
     /**
-     * The method returns an union of the rectangle with an other rectangle, that is, the smallest rectangle, that
-     * contains both.
+     * The method returns an union of the rectangle with an other rectangle, that
+     * is, the smallest rectangle, that contains both.
      * 
      * @param r rectangle to build union with this rectangle
      * 
@@ -194,7 +198,8 @@ public class Rectangle {
      * 
      * @param X x coordinate of the point, whose containment is to verify
      * @param Y y coordinate of the point, whose containment is to verify
-     * @return <code>true</code> if the point is withhin this rectangle in other case <code>false</code>
+     * @return <code>true</code> if the point is withhin this rectangle in other
+     *         case <code>false</code>
      */
     public boolean inside(int x, int y) {
         return (x >= _x) && ((x - _x) < _width) && (y >= _y) && ((y - _y) < _height);
@@ -214,7 +219,7 @@ public class Rectangle {
     /**
      * Changes the size of the rectangle
      * 
-     * @param width new width
+     * @param width  new width
      * @param height new height
      */
     public void resize(int width, int height) {
