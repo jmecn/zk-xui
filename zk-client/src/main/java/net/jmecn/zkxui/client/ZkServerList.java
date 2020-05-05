@@ -21,16 +21,27 @@ public enum ZkServerList {
 
     INSTANCE;
 
-    final static String NAME = "zkServer.cfg";
+    final static String NAME = "server.cfg";
 
     private File file = new File(NAME);
 
     private List<Env> list = new ArrayList<Env>();
 
     ZkServerList() {
-        if (file.exists()) {
-            load();
+    	if (!file.exists()) {
+    		init();
+    	}
+
+    	if (file.exists()) {
+        	load();
         }
+    }
+
+    private void init() {
+    	try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
+    		out.printf("%s=%s", "localhost", "127.0.0.1:2181");
+    	} catch (IOException e) {
+    	}
     }
 
     private void load() {

@@ -11,4 +11,13 @@
 	</parent>
 	
 	<artifactId>zk-gui</artifactId>
+
+
+	<dependencies>
+		<dependency>
+			<groupId>net.jmecn.zkxui</groupId>
+			<artifactId>zk-client</artifactId>
+			<version>${project.version}</version>
+		</dependency>
+	</dependencies>
 </project>
