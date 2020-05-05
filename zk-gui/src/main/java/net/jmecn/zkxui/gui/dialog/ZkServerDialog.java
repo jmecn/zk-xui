@@ -89,12 +89,12 @@ public class ZkServerDialog extends JDialog {
 		});
 
 		JButton edit = new JButton("Edit");
-		add.addActionListener((e) -> {
+		edit.addActionListener((e) -> {
 			edit();
 		});
 
 		JButton delete = new JButton("Delete");
-		add.addActionListener((e) -> {
+		delete.addActionListener((e) -> {
 			del();
 		});
 
@@ -163,8 +163,8 @@ public class ZkServerDialog extends JDialog {
 			ZkServerList.INSTANCE.save();
 
 			loadList();
+			repaint();
 			list.setSelectedIndex(envlist.size() - 1);// track the last
-			this.repaint();
 			log.info("Add: {}", result);
 		}
 
@@ -196,16 +196,17 @@ public class ZkServerDialog extends JDialog {
 		envlist.remove(idx);
 		ZkServerList.INSTANCE.save();
 
+		loadList();
+		repaint();
+
 		// 刷新界面
-		list.remove(idx);
-		if (list.getModel().getSize() > idx) {
+		if (envlist.size() > idx) {
 			list.setSelectedIndex(idx);
 		} else if (idx > 0) {
 			list.setSelectedIndex(idx - 1);
 		} else {
 			list.setSelectedIndex(0);
 		}
-		this.repaint();
 		log.info("Delete: {}", env);
 	}
 

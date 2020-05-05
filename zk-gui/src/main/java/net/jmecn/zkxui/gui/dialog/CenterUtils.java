@@ -18,6 +18,11 @@ public class CenterUtils {
 	}
 	
 	public static void center(Component parent, Component frame) {
+		if (parent == null) {
+			center(frame);
+			return;
+		}
+
 		int width = frame.getWidth();
 		int height = frame.getHeight();
 		Dimension screenSize = parent.getSize();

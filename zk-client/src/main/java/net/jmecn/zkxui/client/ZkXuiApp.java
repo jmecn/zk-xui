@@ -96,7 +96,11 @@ public class ZkXuiApp {
 
     public void addNode(String path, String node) {
         try {
-            client.createFolder(path + "/" + node, "foo", "bar");
+        	if ("/".equals(path)) {
+        		client.createFolder("/" + node, "foo", "bar");
+        	} else {
+        		client.createFolder(path + "/" + node, "foo", "bar");
+        	}
         } catch (KeeperException | InterruptedException e) {
             log.error("Failed add node, path={}, node={}", path, node, e);
         }
