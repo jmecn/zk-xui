@@ -12,7 +12,6 @@
 	
 	<artifactId>zk-gui</artifactId>
 
-
 	<dependencies>
 		<dependency>
 			<groupId>net.jmecn.zkxui</groupId>

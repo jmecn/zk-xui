@@ -96,8 +96,9 @@
 		</plugins>
 	</build>
 	<modules>
-		<module>zk-tui</module>
+		<module>zk-cli</module>
 		<module>zk-gui</module>
+		<module>zk-tui</module>
 		<module>zk-client</module>
 		<module>zk-jcurses</module>
 	</modules>
