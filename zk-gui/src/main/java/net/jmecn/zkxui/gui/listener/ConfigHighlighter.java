@@ -47,6 +47,7 @@ public class ConfigHighlighter implements CaretListener {
         hl.removeAllHighlights();
 
         String text = textComponent.getText();
+        text = text.replaceAll("\r", "");
         String[] lines = text.split("\n");
 
         int totalIndex = 0;

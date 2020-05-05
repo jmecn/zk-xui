@@ -58,9 +58,6 @@ public class ZkPropertyTableModel extends AbstractTableModel {
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		if (columnIndex == 1) {
-			return true;
-		}
 		return false;
 	}
 

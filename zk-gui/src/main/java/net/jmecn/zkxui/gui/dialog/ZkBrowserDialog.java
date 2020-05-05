@@ -2,11 +2,12 @@ package net.jmecn.zkxui.gui.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.FileDialog;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -54,9 +55,13 @@ public class ZkBrowserDialog extends JFrame {
 
 	private JButton connectButton;
 
-	private JButton importButton;
+	private JButton importFileButton;
 
-	private JButton exportButton;
+	private JButton importEditorButton;
+
+	private JButton exportFileButton;
+
+	private JButton exportEditorButton;
 
 	private JButton addNodeButton;
 
@@ -94,6 +99,15 @@ public class ZkBrowserDialog extends JFrame {
 		getContentPane().add(centerPanel, BorderLayout.CENTER);
 
 		this.setJMenuBar(getMainMenu());
+
+		this.addWindowListener(new WindowAdapter() {
+			public void windowClosing(WindowEvent e) {
+				if (app != null) {
+					app.disconnect();
+					app = null;
+				}
+			}
+		});
 	}
 
 	/**
@@ -113,14 +127,24 @@ public class ZkBrowserDialog extends JFrame {
 			}
 		});
 
-		importButton = new JButton("Import");
-		importButton.addActionListener((e) -> {
-			importData();
+		importFileButton = new JButton("Import File");
+		importFileButton.addActionListener((e) -> {
+			importFromFile();
 		});
 
-		exportButton = new JButton("Export");
-		exportButton.addActionListener((e) -> {
-			exportData();
+		importEditorButton = new JButton("Import Editor");
+		importEditorButton.addActionListener((e) -> {
+			importFromEditor();
+		});
+
+		exportFileButton = new JButton("Export to File");
+		exportFileButton.addActionListener((e) -> {
+			exportToFile();
+		});
+		
+		exportEditorButton = new JButton("Export to Editor");
+		exportEditorButton.addActionListener((e) -> {
+			exportToEditor();
 		});
 
 		addNodeButton = new JButton("Add Node");
@@ -136,8 +160,10 @@ public class ZkBrowserDialog extends JFrame {
 		setButtonEnabled(false);
 
 		mainMenu.add(connectButton);
-		mainMenu.add(importButton);
-		mainMenu.add(exportButton);
+		mainMenu.add(importFileButton);
+		mainMenu.add(importEditorButton);
+		mainMenu.add(exportFileButton);
+		mainMenu.add(exportEditorButton);
 		mainMenu.add(addNodeButton);
 		mainMenu.add(addPropertyButton);
 
@@ -145,8 +171,10 @@ public class ZkBrowserDialog extends JFrame {
 	}
 
 	private void setButtonEnabled(boolean enabled) {
-		importButton.setEnabled(enabled);
-		exportButton.setEnabled(enabled);
+		importFileButton.setEnabled(enabled);
+		importEditorButton.setEnabled(enabled);
+		exportFileButton.setEnabled(enabled);
+		exportEditorButton.setEnabled(enabled);
 		addNodeButton.setEnabled(enabled);
 		addPropertyButton.setEnabled(enabled);
 	}
@@ -188,11 +216,20 @@ public class ZkBrowserDialog extends JFrame {
 		});
 
 		list.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				if (e.getKeyChar() == '\n') {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					int index = list.getSelectedIndex();
 					String node = listModel.getElementAt(index);
 					forward(index, node);
+					return;
+				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					int index = list.getSelectedIndex();
+					String node = listModel.getElementAt(index);
+					deleteNode(index, node);
+					return;
+				} else if (e.getKeyCode() == KeyEvent.VK_INSERT) {
+					addNode();
+					return;
 				}
 			}
 		});
@@ -212,6 +249,31 @@ public class ZkBrowserDialog extends JFrame {
 		JScrollPane scroll = new JScrollPane();
 		scroll.setViewportView(table);
 
+		table.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				if (SwingUtilities.isRightMouseButton(evt)) {
+					// TODO popup menu
+				} else if (SwingUtilities.isLeftMouseButton(evt)) {
+					if (evt.getClickCount() == 2) {
+						 int row = table.rowAtPoint(evt.getPoint());
+						 updateProperty(row);
+					}
+				}
+			}
+		});
+
+		table.addKeyListener(new KeyAdapter() {
+			public void keyPressed(KeyEvent e) {
+				int index = table.getSelectedRow();
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
+					updateProperty(index);
+				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					deleteProperty(index);
+				} else if (e.getKeyCode() == KeyEvent.VK_INSERT) {
+					addProperty();
+				}
+			}
+		});
 		return scroll;
 	}
 
@@ -300,11 +362,11 @@ public class ZkBrowserDialog extends JFrame {
 	}
 
 	private void deleteProperty(int idx) {
-		if (idx <= 0 || idx > zkNode.getLeafBeanLSt().size()) {
+		if (idx < 0 || idx >= zkNode.getLeafBeanLSt().size()) {
 			return;
 		}
 
-		LeafBean leaf = zkNode.getLeafBeanLSt().get(idx - 1);
+		LeafBean leaf = zkNode.getLeafBeanLSt().get(idx);
 		int result = JOptionPane.showConfirmDialog(this, //
 				"Are you sure to delete property[" + leaf.getName() + "] under the node:\n" + app.getCurrentPath(), //
 				"Delete ZooKeeper Property", //
@@ -320,7 +382,7 @@ public class ZkBrowserDialog extends JFrame {
 		repaint();
 	}
 
-	private void importData() {
+	private void importFromFile() {
 		if (JFileChooser.APPROVE_OPTION != chooser.showOpenDialog(this)) {
 			return;
 		}
@@ -353,7 +415,30 @@ public class ZkBrowserDialog extends JFrame {
 		}
 	}
 
-	private void exportData() {
+	private void importFromEditor() {
+		ZkImportEditor editor = new ZkImportEditor();
+		editor.setVisible(true);
+
+		if (!editor.isModified()) {
+			return;
+		}
+
+		editor.getContent();
+		editor.isOverwrite();
+		
+		try {
+			app.importData(editor.getContent(), editor.isOverwrite());
+			JOptionPane.showMessageDialog(this, "Import data success.");
+
+			refresh();
+			repaint();
+		} catch (Exception e) {
+			log.error("Import failed.", e);
+			JOptionPane.showMessageDialog(this, "Import data failed.");
+		}
+	}
+
+	private void exportToFile() {
 		if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(this, "Export this node below:\n" + app.getCurrentPath(), "Export ZooKeeper Data", JOptionPane.YES_NO_OPTION)) {
 			return;
 		}
@@ -398,6 +483,29 @@ public class ZkBrowserDialog extends JFrame {
 		}
 	}
 
+	private void exportToEditor() {
+		if (JOptionPane.YES_OPTION != JOptionPane.showConfirmDialog(this, "Export this node below:\n" + app.getCurrentPath(), "Export ZooKeeper Data", JOptionPane.YES_NO_OPTION)) {
+			return;
+		}
+
+		String content = null;
+		try {
+			content = app.export();
+		} catch (Exception e) {
+			log.error("Failed export " + app.getCurrentPath(), e);
+			JOptionPane.showMessageDialog(this, "Failed export " + app.getCurrentPath());
+			return;
+		}
+
+		if (StringUtils.isBlank(content)) {
+			JOptionPane.showMessageDialog(this, "Failed export " + app.getCurrentPath());
+			return;
+		}
+
+		ZkExportEditor editor = new ZkExportEditor(content);
+		editor.setVisible(true);
+	}
+
 	private void addNode() {
 		ZkNodeDialog dialog = new ZkNodeDialog(app.getCurrentPath(), zkNode);
 		dialog.setVisible(true);
@@ -428,4 +536,25 @@ public class ZkBrowserDialog extends JFrame {
 		repaint();
 	}
 
+	private void updateProperty(int idx) {
+		log.debug("update property with id={}", idx);
+        if (idx < 0 || idx >= zkNode.getLeafBeanLSt().size()) {
+            return;
+        }
+
+        LeafBean leaf = zkNode.getLeafBeanLSt().get(idx);
+        ZkUpdatePropertyDialog dialog =
+            new ZkUpdatePropertyDialog(app.getCurrentPath(), leaf.getName(), leaf.getStrValue());
+        dialog.setVisible(true);
+
+        String result = dialog.getResult();
+        if (result == null || !dialog.isModified()) {
+            return;
+        }
+
+        app.updateProperty(leaf.getName(), result);
+
+        refresh();
+        repaint();
+    }
 }

@@ -61,9 +61,13 @@ public class ZkServerDialog extends JDialog {
 		});
 
 		list.addKeyListener(new KeyAdapter() {
-			public void keyTyped(KeyEvent e) {
-				if (e.getKeyChar() == '\n') {
+			public void keyPressed(KeyEvent e) {
+				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					ok(list.getSelectedIndex());
+				} else if (e.getKeyCode() == KeyEvent.VK_INSERT) {
+					add();
+				} else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+					del();
 				}
 			}
 		});

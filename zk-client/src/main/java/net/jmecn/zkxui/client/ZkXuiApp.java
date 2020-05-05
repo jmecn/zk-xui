@@ -227,6 +227,8 @@ public class ZkXuiApp {
     public void importData(String data, Boolean overwrite) {
         List<String> importFile = new ArrayList<>();
 
+        data = data.replaceAll("\r", "");// replace window \r\n to \n
+
         String[] lines = data.split("\n");
         Integer lineCnt = 0;
         for (String inputLine : lines) {
