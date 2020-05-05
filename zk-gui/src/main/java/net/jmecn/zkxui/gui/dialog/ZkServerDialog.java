@@ -13,6 +13,7 @@ import javax.swing.JList;
 import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
+import javax.swing.SwingUtilities;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jmecn.zkxui.client.ZkServerList;
@@ -35,7 +36,8 @@ public class ZkServerDialog extends JDialog {
 		this.setModal(true);
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
-		this.setLocation(parent.getLocationOnScreen().x + 100, parent.getLocationOnScreen().y + 50);
+		CenterUtils.center(parent, this);
+
 		getContentPane().add(getEnvList(), BorderLayout.CENTER);
 		getContentPane().add(getToolBox(), BorderLayout.SOUTH);
 	}
@@ -47,19 +49,23 @@ public class ZkServerDialog extends JDialog {
 
 		list.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent evt) {
-				if (evt.getClickCount() == 2) {
-					int index = list.locationToIndex(evt.getPoint());
-					ok(index);
+				if (SwingUtilities.isRightMouseButton(evt)) {
+					// Do I need to handle right click?
+				} else if (SwingUtilities.isLeftMouseButton(evt)) {
+					if (evt.getClickCount() == 2) {
+						int index = list.locationToIndex(evt.getPoint());
+						ok(index);
+					}
 				}
 			}
 		});
-		
+
 		list.addKeyListener(new KeyAdapter() {
-		    public void keyTyped(KeyEvent e) {
-		        if (e.getKeyChar() == '\n') {
-		            ok(list.getSelectedIndex());
-		        }
-		    }
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == '\n') {
+					ok(list.getSelectedIndex());
+				}
+			}
 		});
 
 		List<Env> envList = ZkServerList.INSTANCE.list();
@@ -134,14 +140,14 @@ public class ZkServerDialog extends JDialog {
 
 		Env env = envlist.get(idx);
 		ZkXuiApp app = new ZkXuiApp(env);
-        // Connection failed.
-        if (!app.connect()) {
-            JOptionPane.showMessageDialog(this, "Connection to [" + app.getEnv().getZkServers() + "] failed.", "WARN",
-                    JOptionPane.WARNING_MESSAGE);
-            return;
-        }
+		// Connection failed.
+		if (!app.connect()) {
+			JOptionPane.showMessageDialog(this, "Connection to [" + app.getEnv().getZkServers() + "] failed.", "WARN",
+					JOptionPane.WARNING_MESSAGE);
+			return;
+		}
 
-        this.result = app;
+		this.result = app;
 		dispose();
 	}
 

@@ -2,6 +2,10 @@ package net.jmecn.zkxui.gui.dialog;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -9,13 +13,13 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JMenuBar;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JSplitPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.ListSelectionModel;
+import javax.swing.SwingUtilities;
 import javax.swing.table.JTableHeader;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +34,8 @@ public class ZkBrowserDialog extends JFrame {
 	private static final long serialVersionUID = 1L;
 
 	private final static String TITLE = "ZooKeeper Browser";
+
+	private final static String NOT_CONNECTED = "NOT CONNECTED";
 
 	private ZkXuiApp app;
 
@@ -55,6 +61,8 @@ public class ZkBrowserDialog extends JFrame {
 		this.setTitle(TITLE);
 		this.setSize(1280, 720);
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
+
+		CenterUtils.center(this);
 
 		JSplitPane centerPanel = new JSplitPane();
 		centerPanel.setOneTouchExpandable(true);// 让分隔线显示出箭头
@@ -118,7 +126,7 @@ public class ZkBrowserDialog extends JFrame {
 		JLabel pathLabel = new JLabel("Current Path: ");
 		panel.add(pathLabel, BorderLayout.WEST);
 
-		pathField = new JTextField("/");
+		pathField = new JTextField(NOT_CONNECTED);
 		pathField.setEditable(false);
 		pathField.setBackground(Color.WHITE);
 		panel.add(pathField, BorderLayout.CENTER);
@@ -129,9 +137,33 @@ public class ZkBrowserDialog extends JFrame {
 	private JScrollPane getNodeList() {
 		listModel = new ZkNodeListModel();
 
-		JList<String> nodeList = new JList<>(listModel);
+		JList<String> list = new JList<>(listModel);
 		JScrollPane scroll = new JScrollPane();
-		scroll.setViewportView(nodeList);
+		scroll.setViewportView(list);
+
+		list.addMouseListener(new MouseAdapter() {
+			public void mouseClicked(MouseEvent evt) {
+				if (SwingUtilities.isRightMouseButton(evt)) {
+					// TODO popup menu
+				} else if (SwingUtilities.isLeftMouseButton(evt)) {
+					if (evt.getClickCount() == 2) {
+						int index = list.locationToIndex(evt.getPoint());
+						String node = listModel.getElementAt(index);
+						forward(index, node);
+					}
+				}
+			}
+		});
+
+		list.addKeyListener(new KeyAdapter() {
+			public void keyTyped(KeyEvent e) {
+				if (e.getKeyChar() == '\n') {
+					int index = list.getSelectedIndex();
+					String node = listModel.getElementAt(index);
+					forward(index, node);
+				}
+			}
+		});
 		return scroll;
 	}
 
@@ -164,7 +196,7 @@ public class ZkBrowserDialog extends JFrame {
 		this.app = app;
 		setButtonEnabled(true);
 		connectButton.setText("Disconnect");
-		
+
 		refresh();
 		repaint();
 	}
@@ -180,38 +212,38 @@ public class ZkBrowserDialog extends JFrame {
 	}
 
 	private void reset() {
-	    pathField.setText("/");
-	    tableModel.setZkNode(null);
-	    listModel.setZkNode(true, null);
+		pathField.setText(NOT_CONNECTED);
+		tableModel.setZkNode(null);
+		listModel.setZkNode(true, null);
 	}
 
-    private void refresh() {
-    	if (app == null) {
-    		return;
-    	}
-        ZkNode zkNode = app.list();
-        if (zkNode == null) {
-            return;
-        }
+	private void refresh() {
+		if (app == null) {
+			return;
+		}
+		ZkNode zkNode = app.list();
+		if (zkNode == null) {
+			return;
+		}
 
-        this.zkNode = zkNode;
+		this.zkNode = zkNode;
 
-        pathField.setText(app.getCurrentPath());
-        listModel.setZkNode(app.isRootNode(), zkNode);
-        tableModel.setZkNode(zkNode);
-    }
+		pathField.setText(app.getCurrentPath());
+		listModel.setZkNode(app.isRootNode(), zkNode);
+		tableModel.setZkNode(zkNode);
+	}
 
-    private void forward(int idx, String node) {
-        if (!app.isRootNode() && idx == 0) {
-            app.setCurrentPath(app.getParentPath());
-        } else {
-            if (app.isRootNode()) {
-                app.setCurrentPath("/" + node);
-            } else {
-                app.setCurrentPath(app.getCurrentPath() + "/" + node);
-            }
-        }
-        refresh();
-        repaint();
-    }
+	private void forward(int idx, String node) {
+		if (!app.isRootNode() && idx == 0) {
+			app.setCurrentPath(app.getParentPath());
+		} else {
+			if (app.isRootNode()) {
+				app.setCurrentPath("/" + node);
+			} else {
+				app.setCurrentPath(app.getCurrentPath() + "/" + node);
+			}
+		}
+		refresh();
+		repaint();
+	}
 }
