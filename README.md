@@ -13,3 +13,9 @@ For some reason I can't use [DeemOpen/zkui](https://github.com/DeemOpen/zkui) on
 ![tui_import_data](doc/screenshots/tui_import_data.png)
 
 ![tui_edit_properties](doc/screenshots/tui_edit_properties.png)
+
+![gui_zk_server_list](doc/screenshots/gui_zk_server_list.png)
+
+![gui_edit_properties](doc/screenshots/gui_edit_properties.png)
+
+![gui_syntax_highlighter_editor](doc/screenshots/gui_syntax_highlighter_editor.png)
