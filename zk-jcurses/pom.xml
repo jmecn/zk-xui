@@ -8,4 +8,76 @@
         <version>1.0.0.RELEASE</version>
     </parent>
     <artifactId>zk-jcurses</artifactId>
+
+    <properties>
+        <native.source.dir>native</native.source.dir>
+    </properties>
+
+    <build>
+        <extensions>
+            <extension>
+                <groupId>kr.motd.maven</groupId>
+                <artifactId>os-maven-plugin</artifactId>
+                <version>1.6.1</version>
+            </extension>
+        </extensions>
+
+        <plugins>
+            <plugin>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>native-maven-plugin</artifactId>
+                <version>1.0-alpha-11</version>
+                <extensions>true</extensions>
+                <configuration>
+                    <!-- source code -->
+                    <sources>
+                        <source>
+                            <directory>${native.source.dir}</directory>
+                            <fileNames>
+                                <fileName>Toolkit.c</fileName>
+                            </fileNames>
+                        </source>
+                        <source>
+                            <directory>${native.source.dir}/include</directory>
+                        </source>
+                    </sources>
+
+                    <!-- trigger javah -->
+                    <javahOS>linux</javahOS>
+                    <javahProvider>default</javahProvider>
+                    <javahClassNames>
+                        <javahClassName>jcurses.system.Toolkit</javahClassName>
+                    </javahClassNames>
+                    <javahOutputFileName>jcurses_system_Toolkit.h</javahOutputFileName>
+                    <javahOutputDirectory>${project.build.directory}/native/javah</javahOutputDirectory>
+
+                    <!-- compile -->
+                    <compilerProvider>generic</compilerProvider>
+                    <compilerName>gcc</compilerName>
+
+                    <compilerStartOptions>
+                        <compilerStartOption>-fPIC</compilerStartOption>
+                    </compilerStartOptions>
+
+                    <!-- link -->
+                    <linkerStartOptions>
+                        <linkerStartOption>-shared -lncurses</linkerStartOption>
+                    </linkerStartOptions>
+
+                    <linkerFinalName>libjcurses-${os.detected.classifier}</linkerFinalName>
+                    <linkerFinalNameExt>so</linkerFinalNameExt>
+                    <linkerOutputDirectory>${project.build.directory}</linkerOutputDirectory>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
 </project>

@@ -10,9 +10,9 @@ import java.nio.file.StandardCopyOption;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
+import java.util.logging.Logger;
 
 import jcurses.util.Rectangle;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * This class is the 'work factory' of the jcurses library. It contains methods
@@ -20,10 +20,11 @@ import lombok.extern.slf4j.Slf4j;
  * dependend libraries. An developer must not usually call methods of this
  * class, these are used implementing widgets and in jcurses core.
  */
-@Slf4j
 public enum Toolkit {
 
     INSTANCE;
+
+    static Logger log = Logger.getLogger(Toolkit.class.getName());
 
     public static final short CORNER_UNDER_LINE = 0;
     public static final short CORNER_OVER_LINE = 1;
@@ -120,14 +121,14 @@ public enum Toolkit {
 
         // File
         File libjcurses = new File(dirFolder, "libjcurses-" + arch + suffix);
-        log.debug("Executable path: " + libjcurses.getAbsolutePath());
+        log.fine("Executable path: " + libjcurses.getAbsolutePath());
 
         // Check the version of existing .exe file
         if (libjcurses.exists()) {
             // OK, already present
-            log.debug("Executable exists in <" + libjcurses.getAbsolutePath() + ">");
+            log.fine("Executable exists in <" + libjcurses.getAbsolutePath() + ">");
         } else {
-            log.debug("Need to copy executable to <" + libjcurses.getAbsolutePath() + ">");
+            log.fine("Need to copy executable to <" + libjcurses.getAbsolutePath() + ">");
             INSTANCE.copyFile("libjcurses-" + arch + suffix, libjcurses);
         }
 
@@ -146,15 +147,15 @@ public enum Toolkit {
     private void copyFile(String path, File dest) {
         String resourceName = "/native/" + path;
         try {
-            log.debug("Copy from resource <" + resourceName + "> to target <" + dest.getAbsolutePath() + ">");
+            log.fine("Copy from resource <" + resourceName + "> to target <" + dest.getAbsolutePath() + ">");
             if (copy(getClass().getResourceAsStream(resourceName), dest.getAbsolutePath())) {
                 if (dest.exists()) {
-                    log.debug("Target <" + dest.getAbsolutePath() + "> exists");
+                    log.fine("Target <" + dest.getAbsolutePath() + "> exists");
                 } else {
-                    log.debug("Target <" + dest.getAbsolutePath() + "> does not exist");
+                    log.fine("Target <" + dest.getAbsolutePath() + "> does not exist");
                 }
             } else {
-                log.error("Copy resource to target <" + dest.getAbsolutePath() + "> failed");
+                log.warning("Copy resource to target <" + dest.getAbsolutePath() + "> failed");
             }
         } catch (NullPointerException ex) {
             ex.printStackTrace();

@@ -10,12 +10,10 @@ import jcurses.system.InputChar;
 import jcurses.system.Toolkit;
 import jcurses.util.Paging;
 import jcurses.util.Rectangle;
-import lombok.extern.slf4j.Slf4j;
 
 /**
  * The class is the superclass for text editing widgets
  */
-@Slf4j
 public class TextComponent extends Widget {
 
     private int _width = 0;
@@ -496,8 +494,6 @@ public class TextComponent extends Widget {
     }
 
     protected boolean handleInput(InputChar ch) {
-        log.info("handleInput ch={}, code={}, char={}", ch, ch.getCode(),
-                ch.isSpecialCode() ? "[specialKey]" : ch.getCharacter());
         int bCursorPosX = _cursPosX;
         int bCursorPosY = _cursPosY;
         int bFirstChar = _firstChar;
