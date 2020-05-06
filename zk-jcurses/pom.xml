@@ -11,6 +11,7 @@
 
     <properties>
         <native.source.dir>native</native.source.dir>
+        <maven.native.debug>false</maven.native.debug>
     </properties>
 
     <build>
@@ -70,8 +71,12 @@
 
                     <!-- link -->
                     <linkerStartOptions>
-                        <linkerStartOption>-shared -lncurses</linkerStartOption>
+                        <linkerStartOption>-shared</linkerStartOption>
                     </linkerStartOptions>
+
+                    <linkerMiddleOptions>
+                        <linkerMiddleOption>-lncurses</linkerMiddleOption>
+                    </linkerMiddleOptions>
 
                     <linkerFinalName>libjcurses-${os.detected.classifier}</linkerFinalName>
                     <linkerFinalNameExt>so</linkerFinalNameExt>
