@@ -96,11 +96,11 @@ public class ZkXuiApp {
 
     public void addNode(String path, String node) {
         try {
-        	if ("/".equals(path)) {
-        		client.createFolder("/" + node, "foo", "bar");
-        	} else {
-        		client.createFolder(path + "/" + node, "foo", "bar");
-        	}
+            if ("/".equals(path)) {
+                client.createFolder("/" + node, "foo", "bar");
+            } else {
+                client.createFolder(path + "/" + node, "foo", "bar");
+            }
         } catch (KeeperException | InterruptedException e) {
             log.error("Failed add node, path={}, node={}", path, node, e);
         }
@@ -184,7 +184,7 @@ public class ZkXuiApp {
             leaves = client.exportTree(path);
             for (LeafBean leaf : leaves) {
                 output.append(leaf.getPath()).append('=').append(leaf.getName()).append('=')
-                    .append(client.externalizeNodeValue(leaf.getValue())).append('\n');
+                        .append(client.externalizeNodeValue(leaf.getValue())).append('\n');
             }
         } catch (KeeperException | InterruptedException e) {
             e.printStackTrace();

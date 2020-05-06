@@ -26,7 +26,8 @@ public class PasswordField extends TextField {
     }
 
     /**
-     * Override method in TextComponent to display '*' instead of actual character values.
+     * Override method in TextComponent to display '*' instead of actual character
+     * values.
      */
     protected String replaceTextLineForPrinting(String line) {
         int length = line.length();

@@ -41,7 +41,7 @@ class DefaultFileFilter implements FileFilter {
                 return file.startsWith(_filterString.substring(0, _filterString.length() - 1));
             } else {
                 return (file.startsWith(_filterString.substring(0, index)))
-                    && (file.endsWith(_filterString.substring(index + 1, _filterString.length())));
+                        && (file.endsWith(_filterString.substring(index + 1, _filterString.length())));
             }
         }
     }

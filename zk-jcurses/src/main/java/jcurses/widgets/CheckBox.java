@@ -10,8 +10,9 @@ import jcurses.system.Toolkit;
 import jcurses.util.Rectangle;
 
 /**
- * This class implements a checkbox widget. This checkboxes state is modified by typing a special char (default
- * 'space'). You can register listeners by this widget to track state changes.
+ * This class implements a checkbox widget. This checkboxes state is modified by
+ * typing a special char (default 'space'). You can register listeners by this
+ * widget to track state changes.
  */
 public class CheckBox extends Widget {
 
@@ -25,9 +26,9 @@ public class CheckBox extends Widget {
         return __checkBoxDefaultColors;
     }
 
-    private static CharColor __focusedCheckBoxDefaultColors =
-        new CharColor(CharColor.BLUE, CharColor.WHITE, CharColor.REVERSE);
-    private CharColor        _focusedCheckboxColors         = getFocusedCheckboxDefaultColors();
+    private static CharColor __focusedCheckBoxDefaultColors = new CharColor(CharColor.BLUE, CharColor.WHITE,
+            CharColor.REVERSE);
+    private CharColor _focusedCheckboxColors = getFocusedCheckboxDefaultColors();
 
     private CharColor getFocusedCheckboxDefaultColors() {
         return __focusedCheckBoxDefaultColors;
@@ -52,7 +53,8 @@ public class CheckBox extends Widget {
     /**
      * The constructor.
      * 
-     * @param checked true, if the checkbox is checked at first time, false otherwise
+     * @param checked true, if the checkbox is checked at first time, false
+     *                otherwise
      */
     public CheckBox(boolean checked) {
         _checked = checked;

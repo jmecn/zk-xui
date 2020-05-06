@@ -4,9 +4,11 @@ import jcurses.event.ItemEvent;
 import jcurses.event.ItemListener;
 
 /**
- * This class implements a popup menu window. Such windows can be used for example to implemene menu bars ( currently
- * not cantained in the library ). A popup menu window gives a user the possibility to select and ivoke an item from a
- * list and is than closed. Separator items can be used as by <code>MenuList</code> described.
+ * This class implements a popup menu window. Such windows can be used for
+ * example to implemene menu bars ( currently not cantained in the library ). A
+ * popup menu window gives a user the possibility to select and ivoke an item
+ * from a list and is than closed. Separator items can be used as by
+ * <code>MenuList</code> described.
  */
 public class PopUpMenu implements WidgetsConstants, ItemListener {
 
@@ -19,14 +21,14 @@ public class PopUpMenu implements WidgetsConstants, ItemListener {
 
     private String _title = null;
 
-    private int    _selectedIndex = -1;
-    private String _selectedItem  = null;
+    private int _selectedIndex = -1;
+    private String _selectedItem = null;
 
     /**
      * The constructor
      * 
-     * @param x the x coordinate of the dialog window's top left corner
-     * @param y the y coordinate of the dialog window's top left corner
+     * @param x     the x coordinate of the dialog window's top left corner
+     * @param y     the y coordinate of the dialog window's top left corner
      * @param title window's title
      */
     public PopUpMenu(int x, int y, String title) {
@@ -76,7 +78,7 @@ public class PopUpMenu implements WidgetsConstants, ItemListener {
      * Adds an item at the specified position
      * 
      * @param item item to add
-     * @param pos position
+     * @param pos  position
      */
     public void add(int pos, String item) {
         _menuList.add(pos, item);
@@ -131,7 +133,8 @@ public class PopUpMenu implements WidgetsConstants, ItemListener {
     }
 
     /**
-     * Returns the last selected index. Should be invoked after the return of the <code>show</code> to get the result
+     * Returns the last selected index. Should be invoked after the return of the
+     * <code>show</code> to get the result
      * 
      * @return last selected index
      */
@@ -140,7 +143,8 @@ public class PopUpMenu implements WidgetsConstants, ItemListener {
     }
 
     /**
-     * Returns the last selected item. Should be invoked after the return of the <code>show</code> to get the result
+     * Returns the last selected item. Should be invoked after the return of the
+     * <code>show</code> to get the result
      * 
      * @return last selected index
      */

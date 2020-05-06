@@ -11,8 +11,9 @@ import jcurses.widgets.WidgetsConstants;
 import java.util.StringTokenizer;
 
 /**
- * This is a class to create and show user defined messages. Such message is a dialog with an user defined title,
- * containing an user defined text and a button to close the window with an user defined label.
+ * This is a class to create and show user defined messages. Such message is a
+ * dialog with an user defined title, containing an user defined text and a
+ * button to close the window with an user defined label.
  */
 public class Message extends Dialog implements ActionListener {
 
@@ -21,8 +22,8 @@ public class Message extends Dialog implements ActionListener {
     /**
      * The constructor
      * 
-     * @param title the message's title
-     * @param text the message's text
+     * @param title       the message's title
+     * @param text        the message's text
      * @param buttonLabel the label on the message's button
      * 
      */
@@ -37,10 +38,10 @@ public class Message extends Dialog implements ActionListener {
         _button.addListener(this);
 
         manager.addWidget(label, 0, 0, getWidth(text, title) + 2, getHeight(text) + 2,
-            WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+                WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
 
         manager.addWidget(_button, 0, getHeight(text) + 2, getWidth(text, title) + 2, 5,
-            WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
+                WidgetsConstants.ALIGNMENT_CENTER, WidgetsConstants.ALIGNMENT_CENTER);
 
     }
 

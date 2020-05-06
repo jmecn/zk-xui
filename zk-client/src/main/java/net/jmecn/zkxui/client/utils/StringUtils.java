@@ -10,14 +10,17 @@ public class StringUtils {
 
     /**
      * The empty String <code>""</code>.
+     * 
      * @since 2.0
      */
     public static final String EMPTY = "";
 
     // Empty checks
-    //-----------------------------------------------------------------------
+    // -----------------------------------------------------------------------
     /**
-     * <p>Checks if a String is empty ("") or null.</p>
+     * <p>
+     * Checks if a String is empty ("") or null.
+     * </p>
      *
      * <pre>
      * StringUtils.isEmpty(null)      = true
@@ -27,11 +30,12 @@ public class StringUtils {
      * StringUtils.isEmpty("  bob  ") = false
      * </pre>
      *
-     * <p>NOTE: This method changed in Lang version 2.0.
-     * It no longer trims the String.
-     * That functionality is available in isBlank().</p>
+     * <p>
+     * NOTE: This method changed in Lang version 2.0. It no longer trims the String.
+     * That functionality is available in isBlank().
+     * </p>
      *
-     * @param str  the String to check, may be null
+     * @param str the String to check, may be null
      * @return <code>true</code> if the String is empty or null
      */
     public static boolean isEmpty(String str) {
@@ -39,7 +43,9 @@ public class StringUtils {
     }
 
     /**
-     * <p>Checks if a String is not empty ("") and not null.</p>
+     * <p>
+     * Checks if a String is not empty ("") and not null.
+     * </p>
      *
      * <pre>
      * StringUtils.isNotEmpty(null)      = false
@@ -49,7 +55,7 @@ public class StringUtils {
      * StringUtils.isNotEmpty("  bob  ") = true
      * </pre>
      *
-     * @param str  the String to check, may be null
+     * @param str the String to check, may be null
      * @return <code>true</code> if the String is not empty and not null
      */
     public static boolean isNotEmpty(String str) {
@@ -57,7 +63,9 @@ public class StringUtils {
     }
 
     /**
-     * <p>Checks if a String is whitespace, empty ("") or null.</p>
+     * <p>
+     * Checks if a String is whitespace, empty ("") or null.
+     * </p>
      *
      * <pre>
      * StringUtils.isBlank(null)      = true
@@ -67,7 +75,7 @@ public class StringUtils {
      * StringUtils.isBlank("  bob  ") = false
      * </pre>
      *
-     * @param str  the String to check, may be null
+     * @param str the String to check, may be null
      * @return <code>true</code> if the String is null, empty or whitespace
      * @since 2.0
      */
@@ -85,7 +93,9 @@ public class StringUtils {
     }
 
     /**
-     * <p>Checks if a String is not empty (""), not null and not whitespace only.</p>
+     * <p>
+     * Checks if a String is not empty (""), not null and not whitespace only.
+     * </p>
      *
      * <pre>
      * StringUtils.isNotBlank(null)      = false
@@ -95,27 +105,30 @@ public class StringUtils {
      * StringUtils.isNotBlank("  bob  ") = true
      * </pre>
      *
-     * @param str  the String to check, may be null
-     * @return <code>true</code> if the String is
-     *  not empty and not null and not whitespace
+     * @param str the String to check, may be null
+     * @return <code>true</code> if the String is not empty and not null and not
+     *         whitespace
      * @since 2.0
      */
     public static boolean isNotBlank(String str) {
         return !StringUtils.isBlank(str);
     }
 
-
     /**
-     * <p>Removes control characters (char &lt;= 32) from both
-     * ends of this String, handling <code>null</code> by returning
-     * <code>null</code>.</p>
+     * <p>
+     * Removes control characters (char &lt;= 32) from both ends of this String,
+     * handling <code>null</code> by returning <code>null</code>.
+     * </p>
      *
-     * <p>The String is trimmed using {@link String#trim()}.
-     * Trim removes start and end characters &lt;= 32.
-     * To strip whitespace use {@link #strip(String)}.</p>
+     * <p>
+     * The String is trimmed using {@link String#trim()}. Trim removes start and end
+     * characters &lt;= 32. To strip whitespace use {@link #strip(String)}.
+     * </p>
      *
-     * <p>To trim your choice of characters, use the
-     * {@link #strip(String, String)} methods.</p>
+     * <p>
+     * To trim your choice of characters, use the {@link #strip(String, String)}
+     * methods.
+     * </p>
      *
      * <pre>
      * StringUtils.trim(null)          = null
@@ -125,7 +138,7 @@ public class StringUtils {
      * StringUtils.trim("    abc    ") = "abc"
      * </pre>
      *
-     * @param str  the String to be trimmed, may be null
+     * @param str the String to be trimmed, may be null
      * @return the trimmed string, <code>null</code> if null String input
      */
     public static String trim(String str) {
@@ -133,13 +146,15 @@ public class StringUtils {
     }
 
     /**
-     * <p>Removes control characters (char &lt;= 32) from both
-     * ends of this String returning <code>null</code> if the String is
-     * empty ("") after the trim or if it is <code>null</code>.
+     * <p>
+     * Removes control characters (char &lt;= 32) from both ends of this String
+     * returning <code>null</code> if the String is empty ("") after the trim or if
+     * it is <code>null</code>.
      *
-     * <p>The String is trimmed using {@link String#trim()}.
-     * Trim removes start and end characters &lt;= 32.
-     * To strip whitespace use {@link #stripToNull(String)}.</p>
+     * <p>
+     * The String is trimmed using {@link String#trim()}. Trim removes start and end
+     * characters &lt;= 32. To strip whitespace use {@link #stripToNull(String)}.
+     * </p>
      *
      * <pre>
      * StringUtils.trimToNull(null)          = null
@@ -149,9 +164,9 @@ public class StringUtils {
      * StringUtils.trimToNull("    abc    ") = "abc"
      * </pre>
      *
-     * @param str  the String to be trimmed, may be null
-     * @return the trimmed String,
-     *  <code>null</code> if only chars &lt;= 32, empty or null String input
+     * @param str the String to be trimmed, may be null
+     * @return the trimmed String, <code>null</code> if only chars &lt;= 32, empty
+     *         or null String input
      * @since 2.0
      */
     public static String trimToNull(String str) {
@@ -160,13 +175,15 @@ public class StringUtils {
     }
 
     /**
-     * <p>Removes control characters (char &lt;= 32) from both
-     * ends of this String returning an empty String ("") if the String
-     * is empty ("") after the trim or if it is <code>null</code>.
+     * <p>
+     * Removes control characters (char &lt;= 32) from both ends of this String
+     * returning an empty String ("") if the String is empty ("") after the trim or
+     * if it is <code>null</code>.
      *
-     * <p>The String is trimmed using {@link String#trim()}.
-     * Trim removes start and end characters &lt;= 32.
-     * To strip whitespace use {@link #stripToEmpty(String)}.</p>
+     * <p>
+     * The String is trimmed using {@link String#trim()}. Trim removes start and end
+     * characters &lt;= 32. To strip whitespace use {@link #stripToEmpty(String)}.
+     * </p>
      *
      * <pre>
      * StringUtils.trimToEmpty(null)          = ""
@@ -176,7 +193,7 @@ public class StringUtils {
      * StringUtils.trimToEmpty("    abc    ") = "abc"
      * </pre>
      *
-     * @param str  the String to be trimmed, may be null
+     * @param str the String to be trimmed, may be null
      * @return the trimmed String, or an empty String if <code>null</code> input
      * @since 2.0
      */

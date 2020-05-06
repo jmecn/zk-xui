@@ -19,9 +19,9 @@ import net.jmecn.zkxui.client.vo.ZkNode;
 
 public class ZkNodeDialog extends JDialog {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private Set<String> existsNodes;
+    private Set<String> existsNodes;
 
     private String oldValue;
 
@@ -41,7 +41,7 @@ public class ZkNodeDialog extends JDialog {
         this.setResizable(false);
         this.setModal(true);
         this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
-        
+
         CenterUtils.center(this);
 
         this.existsNodes = new HashSet<>();
@@ -74,90 +74,90 @@ public class ZkNodeDialog extends JDialog {
             cancel();
         });
 
-		JPanel panel = new JPanel();
-		this.setContentPane(panel);
+        JPanel panel = new JPanel();
+        this.setContentPane(panel);
 
-		GridBagLayout layout = new GridBagLayout();
-		panel.setLayout(layout);
+        GridBagLayout layout = new GridBagLayout();
+        panel.setLayout(layout);
 
-		GridBagConstraints gbs = new GridBagConstraints();
+        GridBagConstraints gbs = new GridBagConstraints();
 
-		// path
-		gbs.gridx = 0;
-		gbs.gridy = 0;
-		gbs.gridwidth = 1;
-		gbs.gridheight = 1;
-		gbs.weightx = 1.0;
-		gbs.weighty = 1.0;
-		gbs.insets = new Insets(2, 2, 2, 2);
-		gbs.fill = GridBagConstraints.NONE;
-		gbs.anchor = GridBagConstraints.EAST;
-		layout.setConstraints(pathLabel, gbs);
+        // path
+        gbs.gridx = 0;
+        gbs.gridy = 0;
+        gbs.gridwidth = 1;
+        gbs.gridheight = 1;
+        gbs.weightx = 1.0;
+        gbs.weighty = 1.0;
+        gbs.insets = new Insets(2, 2, 2, 2);
+        gbs.fill = GridBagConstraints.NONE;
+        gbs.anchor = GridBagConstraints.EAST;
+        layout.setConstraints(pathLabel, gbs);
 
-		panel.add(pathLabel);
+        panel.add(pathLabel);
 
-		gbs.gridx = 1;
-		gbs.gridy = 0;
-		gbs.gridwidth = 4;
-		gbs.gridheight = 1;
-		gbs.weightx = 4.0;
-		gbs.weighty = 1.0;
-		gbs.insets = new Insets(2, 2, 2, 16);
-		gbs.fill = GridBagConstraints.HORIZONTAL;
-		gbs.anchor = GridBagConstraints.WEST;
-		layout.setConstraints(pathField, gbs);
-		panel.add(pathField);
+        gbs.gridx = 1;
+        gbs.gridy = 0;
+        gbs.gridwidth = 4;
+        gbs.gridheight = 1;
+        gbs.weightx = 4.0;
+        gbs.weighty = 1.0;
+        gbs.insets = new Insets(2, 2, 2, 16);
+        gbs.fill = GridBagConstraints.HORIZONTAL;
+        gbs.anchor = GridBagConstraints.WEST;
+        layout.setConstraints(pathField, gbs);
+        panel.add(pathField);
 
-		// name
-		gbs.gridx = 0;
-		gbs.gridy = 1;
-		gbs.gridwidth = 1;
-		gbs.gridheight = 1;
-		gbs.weightx = 1.0;
-		gbs.weighty = 1.0;
-		gbs.insets = new Insets(2, 2, 2, 2);
-		gbs.fill = GridBagConstraints.NONE;
-		gbs.anchor = GridBagConstraints.EAST;
-		layout.setConstraints(nameLabel, gbs);
+        // name
+        gbs.gridx = 0;
+        gbs.gridy = 1;
+        gbs.gridwidth = 1;
+        gbs.gridheight = 1;
+        gbs.weightx = 1.0;
+        gbs.weighty = 1.0;
+        gbs.insets = new Insets(2, 2, 2, 2);
+        gbs.fill = GridBagConstraints.NONE;
+        gbs.anchor = GridBagConstraints.EAST;
+        layout.setConstraints(nameLabel, gbs);
 
-		panel.add(nameLabel);
+        panel.add(nameLabel);
 
-		gbs.gridx = 1;
-		gbs.gridy = 1;
-		gbs.gridwidth = 4;
-		gbs.gridheight = 1;
-		gbs.weightx = 4.0;
-		gbs.weighty = 1.0;
-		gbs.insets = new Insets(2, 2, 2, 16);
-		gbs.fill = GridBagConstraints.HORIZONTAL;
-		gbs.anchor = GridBagConstraints.CENTER;
-		layout.setConstraints(nameField, gbs);
-		panel.add(nameField);
+        gbs.gridx = 1;
+        gbs.gridy = 1;
+        gbs.gridwidth = 4;
+        gbs.gridheight = 1;
+        gbs.weightx = 4.0;
+        gbs.weighty = 1.0;
+        gbs.insets = new Insets(2, 2, 2, 16);
+        gbs.fill = GridBagConstraints.HORIZONTAL;
+        gbs.anchor = GridBagConstraints.CENTER;
+        layout.setConstraints(nameField, gbs);
+        panel.add(nameField);
 
-		// buttons
-		gbs.gridx = 2;
-		gbs.gridy = 2;
-		gbs.gridwidth = 1;
-		gbs.gridheight = 1;
-		gbs.weightx = 1.0;
-		gbs.weighty = 1.0;
-		gbs.insets = new Insets(2, 2, 2, 2);
-		gbs.fill = GridBagConstraints.NONE;
-		gbs.anchor = GridBagConstraints.EAST;
-		layout.setConstraints(okButton, gbs);
-		panel.add(okButton);
+        // buttons
+        gbs.gridx = 2;
+        gbs.gridy = 2;
+        gbs.gridwidth = 1;
+        gbs.gridheight = 1;
+        gbs.weightx = 1.0;
+        gbs.weighty = 1.0;
+        gbs.insets = new Insets(2, 2, 2, 2);
+        gbs.fill = GridBagConstraints.NONE;
+        gbs.anchor = GridBagConstraints.EAST;
+        layout.setConstraints(okButton, gbs);
+        panel.add(okButton);
 
-		gbs.gridx = 3;
-		gbs.gridy = 2;
-		gbs.gridwidth = 1;
-		gbs.gridheight = 1;
-		gbs.weightx = 1.0;
-		gbs.weighty = 1.0;
-		gbs.insets = new Insets(2, 2, 2, 2);
-		gbs.fill = GridBagConstraints.NONE;
-		gbs.anchor = GridBagConstraints.WEST;
-		layout.setConstraints(cancelButton, gbs);
-		panel.add(cancelButton);
+        gbs.gridx = 3;
+        gbs.gridy = 2;
+        gbs.gridwidth = 1;
+        gbs.gridheight = 1;
+        gbs.weightx = 1.0;
+        gbs.weighty = 1.0;
+        gbs.insets = new Insets(2, 2, 2, 2);
+        gbs.fill = GridBagConstraints.NONE;
+        gbs.anchor = GridBagConstraints.WEST;
+        layout.setConstraints(cancelButton, gbs);
+        panel.add(cancelButton);
     }
 
     public String getResult() {
@@ -178,7 +178,8 @@ public class ZkNodeDialog extends JDialog {
 
         // check exists
         if (existsNodes.contains(name)) {
-            JOptionPane.showMessageDialog(this, "Name[" + name + "] already exists", "WARN", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Name[" + name + "] already exists", "WARN",
+                    JOptionPane.WARNING_MESSAGE);
             return;
         }
 

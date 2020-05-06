@@ -6,45 +6,45 @@ import net.jmecn.zkxui.client.vo.ZkNode;
 
 public class ZkNodeListModel extends AbstractListModel<String> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	private boolean isRoot = true;
+    private boolean isRoot = true;
 
-	private ZkNode zkNode = null;
+    private ZkNode zkNode = null;
 
-	public void setZkNode(boolean isRoot, ZkNode zkNode) {
-	    int lastLength = 0;
-	    if (this.zkNode != null) {
-	        lastLength = this.zkNode.getNodeLst().size();
-	    }
-		this.isRoot = isRoot;
-		this.zkNode = zkNode;
-		this.fireContentsChanged(this, 0, lastLength - 1);
-	}
+    public void setZkNode(boolean isRoot, ZkNode zkNode) {
+        int lastLength = 0;
+        if (this.zkNode != null) {
+            lastLength = this.zkNode.getNodeLst().size();
+        }
+        this.isRoot = isRoot;
+        this.zkNode = zkNode;
+        this.fireContentsChanged(this, 0, lastLength - 1);
+    }
 
-	@Override
-	public String getElementAt(int index) {
-		if (!isRoot && index == 0) {
-			return "..";
-		}
+    @Override
+    public String getElementAt(int index) {
+        if (!isRoot && index == 0) {
+            return "..";
+        }
 
-		int idx = isRoot ? index : index - 1;
-		return zkNode.getNodeLst().get(idx);
-	}
+        int idx = isRoot ? index : index - 1;
+        return zkNode.getNodeLst().get(idx);
+    }
 
-	@Override
-	public int getSize() {
-		if (zkNode == null) {
-			return 0;
-		}
+    @Override
+    public int getSize() {
+        if (zkNode == null) {
+            return 0;
+        }
 
-		int size = 0;
-		if (!isRoot) {
-			size++;
-		}
+        int size = 0;
+        if (!isRoot) {
+            size++;
+        }
 
-		size += zkNode.getNodeLst().size();
-		return size;
-	}
+        size += zkNode.getNodeLst().size();
+        return size;
+    }
 
 }

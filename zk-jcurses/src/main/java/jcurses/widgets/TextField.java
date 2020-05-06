@@ -15,7 +15,7 @@ public class TextField extends TextComponent {
      * The constructor
      * 
      * @param width the preferred width, if -1, there is no preferred size.
-     * @param text initial text, if null, the field is empty
+     * @param text  initial text, if null, the field is empty
      */
     public TextField(int width, String text) {
         super(width, 1, text);
@@ -66,8 +66,8 @@ public class TextField extends TextComponent {
         return _delimiter;
     }
 
-    private static CharColor __delimiterDefaultColors =
-        new CharColor(CharColor.WHITE, CharColor.BLACK, CharColor.NORMAL);
+    private static CharColor __delimiterDefaultColors = new CharColor(CharColor.WHITE, CharColor.BLACK,
+            CharColor.NORMAL);
 
     private CharColor _delimiterColors = getDelimiterDefaultColors();
 
@@ -96,7 +96,7 @@ public class TextField extends TextComponent {
         // Begrenzer malen
         Toolkit.printString(getDelimiterString(), getAbsoluteX(), getAbsoluteY(), getDelimiterColors());
         Toolkit.printString(getDelimiterString(), getAbsoluteX() + getSize().getWidth() - 1, getAbsoluteY(),
-            getDelimiterColors());
+                getDelimiterColors());
 
     }
 
@@ -111,10 +111,10 @@ public class TextField extends TextComponent {
     protected boolean handleInput(InputChar ch) {
 
         boolean filter = (ch.getCode() == InputChar.KEY_UP) || (ch.getCode() == InputChar.KEY_DOWN)
-            || (ch.getCode() == InputChar.KEY_NPAGE) || (ch.getCode() == InputChar.KEY_PPAGE)
-            || (ch.getCode() == InputChar.KEY_END) || (ch.getCode() == InputChar.KEY_HOME)
-            || ((!ch.isSpecialCode()) && (ch.getCharacter() == '\n'))
-            || ((!ch.isSpecialCode()) && (ch.getCharacter() == '\r'));
+                || (ch.getCode() == InputChar.KEY_NPAGE) || (ch.getCode() == InputChar.KEY_PPAGE)
+                || (ch.getCode() == InputChar.KEY_END) || (ch.getCode() == InputChar.KEY_HOME)
+                || ((!ch.isSpecialCode()) && (ch.getCharacter() == '\n'))
+                || ((!ch.isSpecialCode()) && (ch.getCharacter() == '\r'));
         if (!filter) {
             return super.handleInput(ch);
         } else {

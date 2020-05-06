@@ -11,9 +11,10 @@ import jcurses.system.Toolkit;
 import jcurses.util.Rectangle;
 
 /**
- * This class implements a buttton-widget. Such button has a label and is 'clicked' by user typing a special character
- * (default 'enter'). If it is 'clicked', it generates an <code>ActionEvent</code>, that is delegetated to registered
- * listeners.
+ * This class implements a buttton-widget. Such button has a label and is
+ * 'clicked' by user typing a special character (default 'enter'). If it is
+ * 'clicked', it generates an <code>ActionEvent</code>, that is delegetated to
+ * registered listeners.
  */
 public class Button extends Widget {
 
@@ -44,9 +45,9 @@ public class Button extends Widget {
         return _label;
     }
 
-    private static CharColor __focusedButtonDefaultColors =
-        new CharColor(CharColor.BLUE, CharColor.WHITE, CharColor.REVERSE);
-    private CharColor        _focusedButtonColors         = getFocusedButtonDefaultColors();
+    private static CharColor __focusedButtonDefaultColors = new CharColor(CharColor.BLUE, CharColor.WHITE,
+            CharColor.REVERSE);
+    private CharColor _focusedButtonColors = getFocusedButtonDefaultColors();
 
     private CharColor getFocusedButtonDefaultColors() {
         return __focusedButtonDefaultColors;
@@ -69,7 +70,7 @@ public class Button extends Widget {
     }
 
     private static CharColor __shortCutDefaultColors = new CharColor(CharColor.WHITE, CharColor.RED);
-    private CharColor        _shortCutColors         = getShortCutDefaultColors();
+    private CharColor _shortCutColors = getShortCutDefaultColors();
 
     private CharColor getShortCutDefaultColors() {
         return __shortCutDefaultColors;
@@ -83,8 +84,9 @@ public class Button extends Widget {
     }
 
     /**
-     * Sets button's shortcut char's colors. If the button has a shortcut char and this char is contained by the label,
-     * than the char within the label will be painted in different colors, set by this method
+     * Sets button's shortcut char's colors. If the button has a shortcut char and
+     * this char is contained by the label, than the char within the label will be
+     * painted in different colors, set by this method
      * 
      * @param colors button's shortcut char's colors
      */
@@ -197,8 +199,9 @@ public class Button extends Widget {
     private InputChar _shortCut = null;
 
     /**
-     * Set's button's shortcut char. If this shortcut is typed, than the button will handle the char, as described by
-     * <code>Widget</code>, and generate an Event as whether the button would be 'clicked'.
+     * Set's button's shortcut char. If this shortcut is typed, than the button will
+     * handle the char, as described by <code>Widget</code>, and generate an Event
+     * as whether the button would be 'clicked'.
      */
     public void setShortCut(char c) {
         _shortCut = new InputChar(c);

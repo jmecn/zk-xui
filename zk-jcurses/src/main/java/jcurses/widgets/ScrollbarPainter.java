@@ -4,8 +4,8 @@ import jcurses.system.Toolkit;
 import jcurses.util.Rectangle;
 
 /**
- * This class is used by widgets, having scrollable content, to paint scrollbars. The class
- * <code>jcurses.util.ScrollbarUtils is deprecated.
+ * This class is used by widgets, having scrollable content, to paint
+ * scrollbars. The class <code>jcurses.util.ScrollbarUtils is deprecated.
  * 
  */
 public class ScrollbarPainter {
@@ -27,8 +27,9 @@ public class ScrollbarPainter {
     }
 
     /**
-     * This method must be called, if the widget is painted or repainted. If the the widget was already visible, but the
-     * content (position ) has been changed, the method <code>refresh</code> must be used
+     * This method must be called, if the widget is painted or repainted. If the the
+     * widget was already visible, but the content (position ) has been changed, the
+     * method <code>refresh</code> must be used
      * 
      */
     public void paint() {
@@ -38,19 +39,20 @@ public class ScrollbarPainter {
     }
 
     /**
-     * This method is to be called if the scrollable content ( or it's position ) has been ( or could have been )
-     * changed, to refresh scrollbars only if needed.
+     * This method is to be called if the scrollable content ( or it's position )
+     * has been ( or could have been ) changed, to refresh scrollbars only if
+     * needed.
      * 
      */
     public void refresh() {
         ScrollbarData oldScrollbarData = _currentScrollbarData;
         _currentScrollbarData = readData();
         if ((oldScrollbarData.horizontalOffset != _currentScrollbarData.horizontalOffset)
-            || (oldScrollbarData.horizontalLength != _currentScrollbarData.horizontalLength)) {
+                || (oldScrollbarData.horizontalLength != _currentScrollbarData.horizontalLength)) {
             refreshHorizontalScrollbar(oldScrollbarData);
         }
         if ((oldScrollbarData.horizontalOffset != _currentScrollbarData.horizontalOffset)
-            || (oldScrollbarData.horizontalLength != _currentScrollbarData.horizontalLength)) {
+                || (oldScrollbarData.horizontalLength != _currentScrollbarData.horizontalLength)) {
             refreshVerticalScrollbar(oldScrollbarData);
         }
     }
@@ -97,8 +99,8 @@ public class ScrollbarPainter {
         int length = _currentScrollbarData.horizontalLength;
         if (_widget.hasHorizontalScrollbar() && (length > 0)) {
             Toolkit.drawHorizontalThickLine(_borderRectangle.getX() + 1 + offset,
-                _borderRectangle.getY() + _borderRectangle.getHeight() - 1, _borderRectangle.getX() + offset + length,
-                _widget.getScrollbarColors());
+                    _borderRectangle.getY() + _borderRectangle.getHeight() - 1,
+                    _borderRectangle.getX() + offset + length, _widget.getScrollbarColors());
         }
     }
 
@@ -107,8 +109,8 @@ public class ScrollbarPainter {
         int length = _currentScrollbarData.verticalLength;
         if (_widget.hasVerticalScrollbar() && (length > 0)) {
             Toolkit.drawVerticalThickLine(_borderRectangle.getX() + _borderRectangle.getWidth() - 1,
-                _borderRectangle.getY() + 1 + offset, _borderRectangle.getY() + offset + length,
-                _widget.getScrollbarColors());
+                    _borderRectangle.getY() + 1 + offset, _borderRectangle.getY() + offset + length,
+                    _widget.getScrollbarColors());
         }
     }
 
@@ -116,8 +118,8 @@ public class ScrollbarPainter {
         if (_widget.hasVerticalScrollbar()) {
             if (old.verticalLength > 0) {
                 Toolkit.drawVerticalLine(_borderRectangle.getX() + _borderRectangle.getWidth() - 1,
-                    _borderRectangle.getY() + 1 + old.verticalOffset,
-                    _borderRectangle.getY() + old.verticalOffset + old.verticalLength, _widget.getBorderColors());
+                        _borderRectangle.getY() + 1 + old.verticalOffset,
+                        _borderRectangle.getY() + old.verticalOffset + old.verticalLength, _widget.getBorderColors());
             }
             drawVerticalScrollbar();
         }
@@ -127,8 +129,9 @@ public class ScrollbarPainter {
         if (_widget.hasHorizontalScrollbar()) {
             if (old.horizontalLength > 0) {
                 Toolkit.drawHorizontalLine(_borderRectangle.getX() + 1 + old.horizontalOffset,
-                    _borderRectangle.getY() + _borderRectangle.getHeight() - 1,
-                    _borderRectangle.getX() + old.horizontalOffset + old.horizontalLength, _widget.getBorderColors());
+                        _borderRectangle.getY() + _borderRectangle.getHeight() - 1,
+                        _borderRectangle.getX() + old.horizontalOffset + old.horizontalLength,
+                        _widget.getBorderColors());
             }
             drawHorizontalScrollbar();
         }
@@ -137,12 +140,12 @@ public class ScrollbarPainter {
     private class ScrollbarData {
         int horizontalOffset = 0;
         int horizontalLength = 0;
-        int verticalOffset   = 0;
-        int verticalLength   = 0;
+        int verticalOffset = 0;
+        int verticalLength = 0;
 
         public String toString() {
             return "hoffset=" + horizontalOffset + ",hlength=" + horizontalLength + ",voffset=" + verticalOffset
-                + ",vlength=" + verticalLength;
+                    + ",vlength=" + verticalLength;
         }
     }
 

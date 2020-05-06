@@ -1,10 +1,11 @@
 package jcurses.system;
 
 /**
- * Instances of this class are used by painting to set color attributes of painted chars. Both black-white mode and
- * color mode attributes can ( and must be) be declared. For the color mode, colors of the background an the foreground
- * can be declared, for the background mode can be declared, whether painted chars are output normal, reverse or in
- * string font (bold).
+ * Instances of this class are used by painting to set color attributes of
+ * painted chars. Both black-white mode and color mode attributes can ( and must
+ * be) be declared. For the color mode, colors of the background an the
+ * foreground can be declared, for the background mode can be declared, whether
+ * painted chars are output normal, reverse or in string font (bold).
  * <p>
  * possible values for colors: <br>
  * <code>BLACK</code> <br>
@@ -16,7 +17,8 @@ package jcurses.system;
  * <code>YELLOW</code> <br>
  * <code>WHITE</code>
  * <p>
- * possible values for black-white mode attributes (these attributes are also available for some color displays): <br>
+ * possible values for black-white mode attributes (these attributes are also
+ * available for some color displays): <br>
  * <code>BOLD</code> <br>
  * <code>NORMAL</code> <br>
  * <code>REVERSE</code>
@@ -24,19 +26,19 @@ package jcurses.system;
 public class CharColor {
 
     // color constants
-    public static final short BLACK   = 0;
-    public static final short RED     = 1;
-    public static final short GREEN   = 2;
-    public static final short YELLOW  = 3;
-    public static final short BLUE    = 4;
+    public static final short BLACK = 0;
+    public static final short RED = 1;
+    public static final short GREEN = 2;
+    public static final short YELLOW = 3;
+    public static final short BLUE = 4;
     public static final short MAGENTA = 5;
-    public static final short CYAN    = 6;
-    public static final short WHITE   = 7;
+    public static final short CYAN = 6;
+    public static final short WHITE = 7;
 
     // black-white mode constants
-    public static final short NORMAL  = 0;
+    public static final short NORMAL = 0;
     public static final short REVERSE = 1;
-    public static final short BOLD    = 2;
+    public static final short BOLD = 2;
 
     private short _background;
     private short _foreground;
@@ -48,10 +50,10 @@ public class CharColor {
     /**
      * The constructor
      * 
-     * @param background background color
-     * @param foreground foreground color
+     * @param background  background color
+     * @param foreground  foreground color
      * @param black-white mode attribute
-     * @param color mode attribute
+     * @param color       mode attribute
      */
     public CharColor(short background, short foreground, short blackWhiteAttribute, short colorAttribute) {
         verifyColor(background);
@@ -68,16 +70,18 @@ public class CharColor {
     /**
      * The constructor
      * 
-     * @param background background color
-     * @param foreground foreground color
-     * @param black-white mode attribute color mode attribute will be set to <code>NORMAL</code>
+     * @param background  background color
+     * @param foreground  foreground color
+     * @param black-white mode attribute color mode attribute will be set to
+     *                    <code>NORMAL</code>
      */
     public CharColor(short background, short foreground, short blackWhiteAttribute) {
         this(background, foreground, NORMAL, NORMAL);
     }
 
     /**
-     * The constructor, sets both the black-white mode attribute and the color mode attribute to <code>NORMAL</code>
+     * The constructor, sets both the black-white mode attribute and the color mode
+     * attribute to <code>NORMAL</code>
      * 
      * @param background background color
      * @param foreground foreground color
@@ -159,7 +163,7 @@ public class CharColor {
 
     private void verifyColor(short color) {
         if ((color != BLACK) && (color != RED) && (color != GREEN) && (color != YELLOW) && (color != BLUE)
-            && (color != MAGENTA) && (color != CYAN) && (color != WHITE)) {
+                && (color != MAGENTA) && (color != CYAN) && (color != WHITE)) {
             throw new IllegalArgumentException("Unknown color:" + color);
         }
     }
@@ -202,17 +206,17 @@ public class CharColor {
     private String getModusName(short index) {
         String result = "";
         switch (index) {
-            case NORMAL:
-                result = "NORMAL";
-                break;
-            case REVERSE:
-                result = "REVERSE";
-                break;
-            case BOLD:
-                result = "BOLD";
-                break;
-            default:
-                result = "UNKNOWN MODUS";
+        case NORMAL:
+            result = "NORMAL";
+            break;
+        case REVERSE:
+            result = "REVERSE";
+            break;
+        case BOLD:
+            result = "BOLD";
+            break;
+        default:
+            result = "UNKNOWN MODUS";
 
         }
 

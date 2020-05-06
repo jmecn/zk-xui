@@ -12,28 +12,28 @@ import net.jmecn.zkxui.gui.listener.ConfigHighlighter;
 
 public class ZkExportEditor extends JDialog {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
 
-	public ZkExportEditor() {
-		this(null);
-	}
+    public ZkExportEditor() {
+        this(null);
+    }
 
-	public ZkExportEditor(String content) {
-		this.setSize(1080, 720);
-		this.setTitle("ZooKeeper Config Editor");
-		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		
-		CenterUtils.center(this);
+    public ZkExportEditor(String content) {
+        this.setSize(1080, 720);
+        this.setTitle("ZooKeeper Config Editor");
+        this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        CenterUtils.center(this);
 
         JScrollPane scrollPane = new JScrollPane();
 
         JTextPane textPane = new JTextPane();
         if (StringUtils.isNotBlank(content)) {
-        	textPane.setText(content);
+            textPane.setText(content);
         }
         scrollPane.setViewportView(textPane);
         this.getContentPane().add(scrollPane, BorderLayout.CENTER);
 
         textPane.addCaretListener(new ConfigHighlighter(textPane));
-	}
+    }
 }

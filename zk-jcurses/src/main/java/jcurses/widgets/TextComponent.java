@@ -18,7 +18,7 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class TextComponent extends Widget {
 
-    private int _width  = 0;
+    private int _width = 0;
     private int _height = 0;
 
     private int _cursPosX = 0;
@@ -27,17 +27,19 @@ public class TextComponent extends Widget {
     private int _firstChar = 0;
     private int _firstLine = 0;
 
-    StringBuffer _text        = new StringBuffer("");
-    ArrayList    _lines       = new ArrayList();
-    ArrayList    _lineLengths = new ArrayList();
+    StringBuffer _text = new StringBuffer("");
+    ArrayList _lines = new ArrayList();
+    ArrayList _lineLengths = new ArrayList();
 
     /**
      * The constructor
      * 
-     * @param width the preferred width of the component. If -1 is stated, there is no preferred width and the component
-     *            is layouted dependend on the container and the text
-     * @param height the preferred height of the component. If -1 is stated, there is no preferred width and the
-     *            component is layouted dependend on the container.
+     * @param width  the preferred width of the component. If -1 is stated, there is
+     *               no preferred width and the component is layouted dependend on
+     *               the container and the text
+     * @param height the preferred height of the component. If -1 is stated, there
+     *               is no preferred width and the component is layouted dependend
+     *               on the container.
      * @text the initial text, if <code>null<code> the component is empty
      * 
      */
@@ -52,10 +54,12 @@ public class TextComponent extends Widget {
     /**
      * The constructor
      * 
-     * @param width the preferred width of the component. If -1 is stated, there is no preferred width and the component
-     *            is layouted dependend on the container and the text
-     * @param height the preferred height of the component. If -1 is stated, there is no preferred width and the
-     *            component is layouted dependend on the container and the text.
+     * @param width  the preferred width of the component. If -1 is stated, there is
+     *               no preferred width and the component is layouted dependend on
+     *               the container and the text
+     * @param height the preferred height of the component. If -1 is stated, there
+     *               is no preferred width and the component is layouted dependend
+     *               on the container and the text.
      * 
      */
     public TextComponent(int width, int height) {
@@ -105,7 +109,7 @@ public class TextComponent extends Widget {
     /**
      * Sets the contained text
      * 
-     * @param text text to set
+     * @param text          text to set
      * @param dispatchEvent if true, the widget is repainted
      */
     public void setText(String text, boolean dispatchEvent) {
@@ -135,7 +139,8 @@ public class TextComponent extends Widget {
     }
 
     /**
-     * Fur abgeleitete Klassen Textbreite und Hohe und Koordinaten der oberen Rechten Ecke des Sichtbaren Bereiches
+     * Fur abgeleitete Klassen Textbreite und Hohe und Koordinaten der oberen
+     * Rechten Ecke des Sichtbaren Bereiches
      */
 
     protected int getTextX() {
@@ -199,24 +204,26 @@ public class TextComponent extends Widget {
     }
 
     /**
-     * This method draws text-dependent additional things such as scrollbars. As default it makes nothing, can be
-     * overriden in inherited classes ( for example text area)
+     * This method draws text-dependent additional things such as scrollbars. As
+     * default it makes nothing, can be overriden in inherited classes ( for example
+     * text area)
      */
     protected void drawAdditionalThings() {
         // nothing
     }
 
     /**
-     * This method refreshes text-dependent additional after a text change such as scrollbars. As default it makes
-     * nothing, can be overriden in inherited classes ( for example text area)
+     * This method refreshes text-dependent additional after a text change such as
+     * scrollbars. As default it makes nothing, can be overriden in inherited
+     * classes ( for example text area)
      */
     protected void refreshAdditionalThings() {
         // nothing
     }
 
     /**
-     * The method returns the rectangle, within that the text is painted. Is overrided by derived classes for example to
-     * implement a border.
+     * The method returns the rectangle, within that the text is painted. Is
+     * overrided by derived classes for example to implement a border.
      * 
      */
     protected Rectangle getTextRectangle() {
@@ -248,14 +255,16 @@ public class TextComponent extends Widget {
 
     private int getFirstLineNumber() {
         /*
-         * int result = _cursPosY - getTextRectangle().getHeight()+1; result = (result < 0)?0:result;
+         * int result = _cursPosY - getTextRectangle().getHeight()+1; result = (result <
+         * 0)?0:result;
          */
         return _firstLine;
     }
 
     private int getFirstCharNumber() {
         /*
-         * int result = _cursPosX - getTextRectangle().getWidth()+1; result = (result < 0)?0:result;
+         * int result = _cursPosX - getTextRectangle().getWidth()+1; result = (result <
+         * 0)?0:result;
          */
         return _firstChar;
     }
@@ -266,9 +275,9 @@ public class TextComponent extends Widget {
         return __textComponentDefaultColors;
     }
 
-    private static CharColor __focusedTextComponentDefaultColors =
-        new CharColor(CharColor.BLUE, CharColor.WHITE, CharColor.REVERSE);
-    private CharColor        _focusedTextComponentColors         = getFocusedTextComponentDefaultColors();
+    private static CharColor __focusedTextComponentDefaultColors = new CharColor(CharColor.BLUE, CharColor.WHITE,
+            CharColor.REVERSE);
+    private CharColor _focusedTextComponentColors = getFocusedTextComponentDefaultColors();
 
     public CharColor getFocusedTextComponentDefaultColors() {
         return __focusedTextComponentDefaultColors;
@@ -283,7 +292,7 @@ public class TextComponent extends Widget {
     }
 
     private static CharColor __cursorDefaultColors = new CharColor(CharColor.BLACK, CharColor.WHITE);
-    private CharColor        _cursorColors         = getCursorDefaultColors();
+    private CharColor _cursorColors = getCursorDefaultColors();
 
     public CharColor getCursorDefaultColors() {
         return __cursorDefaultColors;
@@ -337,7 +346,7 @@ public class TextComponent extends Widget {
             int length2 = length - firstChar;
             int length3 = (length2 > rect.getWidth()) ? rect.getWidth() : length2;
             Toolkit.printString(replaceTextLineForPrinting(_text.substring(pos + firstChar, pos + firstChar + length3)),
-                rect.getX(), rect.getY() + index - firstLine, colors);
+                    rect.getX(), rect.getY() + index - firstLine, colors);
         }
     }
 
@@ -474,8 +483,9 @@ public class TextComponent extends Widget {
     }
 
     /**
-     * This method replaces a line of text to printing througth another text line. This can be overrided in derived
-     * classes for example for painting all chars as capitals, or for password input. Here the same line is returned.
+     * This method replaces a line of text to printing througth another text line.
+     * This can be overrided in derived classes for example for painting all chars
+     * as capitals, or for password input. Here the same line is returned.
      * 
      * @param line a text line to replace, contains no line breaks
      * @return decoded line
@@ -486,7 +496,8 @@ public class TextComponent extends Widget {
     }
 
     protected boolean handleInput(InputChar ch) {
-        log.info("handleInput ch={}, code={}, char={}", ch, ch.getCode(), ch.isSpecialCode() ? "[specialKey]" : ch.getCharacter());
+        log.info("handleInput ch={}, code={}, char={}", ch, ch.getCode(),
+                ch.isSpecialCode() ? "[specialKey]" : ch.getCharacter());
         int bCursorPosX = _cursPosX;
         int bCursorPosY = _cursPosY;
         int bFirstChar = _firstChar;
@@ -586,7 +597,8 @@ public class TextComponent extends Widget {
     }
 
     /**
-     * The method sets the cursor position to given koordinates ( within the text, not widget )
+     * The method sets the cursor position to given koordinates ( within the text,
+     * not widget )
      * 
      * @param x new x cursor coordinate within the text
      * @param y new y cursor coordinate within the text

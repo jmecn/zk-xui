@@ -4,19 +4,20 @@ import jcurses.event.WindowEvent;
 import jcurses.event.WindowListener;
 
 /**
- * This class implements a modal dialog. The diffirence to a normal window is, that a call oft the 'show' - method
- * blocks, until the dialog window is closed.
+ * This class implements a modal dialog. The diffirence to a normal window is,
+ * that a call oft the 'show' - method blocks, until the dialog window is
+ * closed.
  */
 public class Dialog extends Window implements WindowListener, WindowManagerBlockingCondition {
 
     /**
      * The constructor
      * 
-     * @param x the x coordinate of the dialog window's top left corner
-     * @param y the y coordinate of the dialog window's top left corner
-     * @param width the width of the dialog window
+     * @param x      the x coordinate of the dialog window's top left corner
+     * @param y      the y coordinate of the dialog window's top left corner
+     * @param width  the width of the dialog window
      * @param height the height of the dialog window
-     * @param title dialog's title
+     * @param title  dialog's title
      * @param border true, if the dialog window has a border, false otherwise
      */
     public Dialog(int x, int y, int width, int height, boolean border, String title) {
@@ -27,9 +28,9 @@ public class Dialog extends Window implements WindowListener, WindowManagerBlock
     /**
      * The constructor. The dialog window is centered ot the screen.
      *
-     * @param width the width of the dialog window
+     * @param width  the width of the dialog window
      * @param height the height of the dialog window
-     * @param title dialog's title
+     * @param title  dialog's title
      * @param border true, if the dialog window has a border, false otherwise
      */
     public Dialog(int width, int height, boolean border, String title) {
