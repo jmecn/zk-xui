@@ -1,6 +1,3 @@
-/**
- * Huatu.com Inc. Copyright (c) 2014-2020 All Rights Reserved.
- */
 package net.jmecn.zkxui.gui.listener;
 
 import java.awt.Color;

@@ -39,6 +39,8 @@ import net.jmecn.zkxui.client.vo.LeafBean;
 import net.jmecn.zkxui.client.vo.ZkNode;
 import net.jmecn.zkxui.gui.model.ZkNodeListModel;
 import net.jmecn.zkxui.gui.model.ZkPropertyTableModel;
+import net.jmecn.zkxui.gui.task.ProgressDialog;
+import net.jmecn.zkxui.gui.task.ProgressTask;
 
 @Slf4j
 public class ZkBrowserDialog extends JFrame {
@@ -315,7 +317,18 @@ public class ZkBrowserDialog extends JFrame {
 		if (app == null) {
 			return;
 		}
-		ZkNode zkNode = app.list();
+
+		ProgressTask<ZkNode> task = new ProgressTask<ZkNode>() {
+            @Override
+            public ZkNode call() throws Exception {
+                return app.list();
+            }
+		};
+
+		ProgressDialog<ZkNode> dialog = new ProgressDialog<>("Fetch: " + app.getCurrentPath(), task);
+		dialog.setVisible(true);
+
+		ZkNode zkNode = dialog.getResult();
 		if (zkNode == null) {
 			return;
 		}
