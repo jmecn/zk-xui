@@ -184,11 +184,12 @@ public class ZkServerDialog extends JDialog {
         if (result != null && dialog.isModified()) {
             envlist.add(result);
             ZkServerList.INSTANCE.save();
+            log.info("Add: {}", result);
 
             loadList();
-            repaint();
             list.setSelectedIndex(envlist.size() - 1);// track the last
-            log.info("Add: {}", result);
+
+            repaint();
         }
 
     }
@@ -218,9 +219,9 @@ public class ZkServerDialog extends JDialog {
         // 移除
         envlist.remove(idx);
         ZkServerList.INSTANCE.save();
+        log.info("Delete: {}", env);
 
         loadList();
-        repaint();
 
         // 刷新界面
         if (envlist.size() > idx) {
@@ -230,7 +231,8 @@ public class ZkServerDialog extends JDialog {
         } else {
             list.setSelectedIndex(0);
         }
-        log.info("Delete: {}", env);
+
+        repaint();
     }
 
     public ZkXuiApp getResult() {

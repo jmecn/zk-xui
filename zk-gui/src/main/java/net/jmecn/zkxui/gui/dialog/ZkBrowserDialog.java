@@ -413,17 +413,34 @@ public class ZkBrowserDialog extends JFrame {
 
         Boolean overwrite = JOptionPane.YES_OPTION == result;
 
-        try (FileInputStream in = new FileInputStream(file)) {
-            app.importData(in, overwrite);
-            in.close();
+        ProgressTask<Boolean> task = new ProgressTask<Boolean>() {
+            @Override
+            public Boolean call() {
+                try (FileInputStream in = new FileInputStream(file)) {
+                    app.importData(in, overwrite);
+                    in.close();
+                    return true;
+                } catch (IOException e) {
+                    log.error("Import failed.", e);
+                    return false;
+                }
+            }
+        };
 
-            JOptionPane.showMessageDialog(this, "Import data success.");
+        ProgressDialog<Boolean> dialog = new ProgressDialog<Boolean>("Import " + file.getName(), task);
+        dialog.setVisible(true);
 
+        Boolean isDone = dialog.getResult();
+        
+        if (isDone == null) {
+            return;
+        }
+
+        if (isDone) {
             refresh();
             repaint();
-        } catch (IOException e) {
-            log.error("Import failed.", e);
-            JOptionPane.showMessageDialog(this, "Import data failed.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Import data failed");
         }
     }
 
@@ -435,18 +452,33 @@ public class ZkBrowserDialog extends JFrame {
             return;
         }
 
-        editor.getContent();
-        editor.isOverwrite();
+        ProgressTask<Boolean> task = new ProgressTask<Boolean>() {
+            @Override
+            public Boolean call() {
+                try {
+                    app.importData(editor.getContent(), editor.isOverwrite());
+                    return true;
+                } catch (Exception e) {
+                    log.error("Import failed.", e);
+                    return false;
+                }
+            }
+        };
 
-        try {
-            app.importData(editor.getContent(), editor.isOverwrite());
-            JOptionPane.showMessageDialog(this, "Import data success.");
+        ProgressDialog<Boolean> dialog = new ProgressDialog<Boolean>("Import data", task);
+        dialog.setVisible(true);
 
+        Boolean isDone = dialog.getResult();
+        
+        if (isDone == null) {
+            return;
+        }
+
+        if (isDone) {
             refresh();
             repaint();
-        } catch (Exception e) {
-            log.error("Import failed.", e);
-            JOptionPane.showMessageDialog(this, "Import data failed.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Import data failed");
         }
     }
 
@@ -473,12 +505,23 @@ public class ZkBrowserDialog extends JFrame {
             }
         }
 
-        String content = null;
-        try {
-            content = app.export();
-        } catch (Exception e) {
-            log.error("Failed export " + app.getCurrentPath(), e);
-            JOptionPane.showMessageDialog(this, "Failed export " + app.getCurrentPath());
+        ProgressTask<String> task = new ProgressTask<String>() {
+            @Override
+            public String call() {
+                try {
+                    return app.export();
+                } catch (Exception e) {
+                    log.error("Failed export " + app.getCurrentPath(), e);
+                    return null;
+                }
+            }
+        };
+
+        ProgressDialog<String> dialog = new ProgressDialog<String>("Export: " + app.getCurrentPath(), task);
+        dialog.setVisible(true);
+
+        String content = dialog.getResult();
+        if (content == null) {
             return;
         }
 
@@ -504,12 +547,23 @@ public class ZkBrowserDialog extends JFrame {
             return;
         }
 
-        String content = null;
-        try {
-            content = app.export();
-        } catch (Exception e) {
-            log.error("Failed export " + app.getCurrentPath(), e);
-            JOptionPane.showMessageDialog(this, "Failed export " + app.getCurrentPath());
+        ProgressTask<String> task = new ProgressTask<String>() {
+            @Override
+            public String call() {
+                try {
+                    return app.export();
+                } catch (Exception e) {
+                    log.error("Failed export " + app.getCurrentPath(), e);
+                    return null;
+                }
+            }
+        };
+
+        ProgressDialog<String> dialog = new ProgressDialog<String>("Export: " + app.getCurrentPath(), task);
+        dialog.setVisible(true);
+
+        String content = dialog.getResult();
+        if (content == null) {
             return;
         }
 
