@@ -224,7 +224,7 @@ public class ZkBrowserDialog extends JFrame {
                     String node = listModel.getElementAt(index);
                     forward(index, node);
                     return;
-                } else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                } else if (e.getKeyCode() == KeyEvent.VK_DELETE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                     int index = list.getSelectedIndex();
                     String node = listModel.getElementAt(index);
                     deleteNode(index, node);
@@ -269,7 +269,7 @@ public class ZkBrowserDialog extends JFrame {
                 int index = table.getSelectedRow();
                 if (e.getKeyCode() == KeyEvent.VK_ENTER) {
                     updateProperty(index);
-                } else if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+                } else if (e.getKeyCode() == KeyEvent.VK_DELETE || e.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
                     deleteProperty(index);
                 } else if (e.getKeyCode() == KeyEvent.VK_INSERT) {
                     addProperty();
