@@ -8,6 +8,7 @@ import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.apache.zookeeper.ZooDefs;
 import org.apache.zookeeper.ZooKeeper;
+import org.apache.zookeeper.client.ZKClientConfig;
 import org.apache.zookeeper.data.ACL;
 import org.apache.zookeeper.data.Id;
 import org.apache.zookeeper.data.Stat;
@@ -78,12 +79,16 @@ public class ZkClient {
 
     public ZooKeeper createZKConnection(String url, Integer zkSessionTimeout) throws IOException, InterruptedException {
         Integer connectAttempt = 0;
+        ZKClientConfig zkClientConfig = new ZKClientConfig();
+        if (zkSessionTimeout != null) {
+            zkClientConfig.setProperty("zookeeper.request.timeout", String.valueOf(zkSessionTimeout));
+        }
         ZooKeeper zk = new ZooKeeper(url, zkSessionTimeout, new Watcher() {
             @Override
             public void process(WatchedEvent event) {
                 log.debug("Connecting to ZK, event={}", event);
             }
-        });
+        }, zkClientConfig);
 
         // Wait till connection is established.
         while (zk.getState() != ZooKeeper.States.CONNECTED) {
@@ -102,15 +107,17 @@ public class ZkClient {
         return defaultAcl;
     }
 
+    public void setZkSessionTimeout(Integer timeout) {
+        this.zkSessionTimeout = timeout;
+    }
+
     public void setDefaultAcl(String jsonAcl) {
         if (jsonAcl == null || jsonAcl.trim().length() == 0) {
             log.debug("Using UNSAFE ACL. Anyone on your LAN can change your Zookeeper data");
             defaultAcl = ZooDefs.Ids.OPEN_ACL_UNSAFE;
             return;
         }
-        // Don't let things happen in a half-baked state, build the new ACL and then set
-        // it into
-        // defaultAcl
+        // Don't let things happen in a half-baked state, build the new ACL and then set it into defaultAcl
         ArrayList<ACL> newDefault = new ArrayList<>();
         try {
             JSONArray acls = (JSONArray) ((JSONObject) new JSONParser().parse(jsonAcl)).get("acls");

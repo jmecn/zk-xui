@@ -40,6 +40,11 @@ public class ZkXuiApp {
         return env;
     }
 
+    public void setZkSessionTimeout(Integer timeout) {
+        log.info("set zk session timeout={}", timeout);
+        this.client.setZkSessionTimeout(timeout);
+    }
+
     public boolean connect() {
         if (client.getZookeeper() == null) {
             log.warn("Connection to {} failed.", env);
@@ -177,8 +182,14 @@ public class ZkXuiApp {
     }
 
     public String export(String path) {
+        return export(path, true);
+    }
+
+    public String export(String path, boolean needTimestamp) {
         StringBuilder output = new StringBuilder();
-        output.append("#App Config Dashboard (ACD) dump created on :").append(new Date()).append("\n");
+        if (needTimestamp) {
+            output.append("#App Config Dashboard (ACD) dump created on :").append(new Date()).append("\n");
+        }
         Set<LeafBean> leaves;
         try {
             leaves = client.exportTree(path);
@@ -188,6 +199,7 @@ public class ZkXuiApp {
             }
         } catch (KeeperException | InterruptedException e) {
             e.printStackTrace();
+            log.error("export failed, path={}", path, e);
         }
 
         return output.toString();

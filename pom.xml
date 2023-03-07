@@ -7,7 +7,7 @@
     <groupId>net.jmecn.zkxui</groupId>
     <artifactId>zk-xui</artifactId>
     <packaging>pom</packaging>
-    <version>1.0.0.RELEASE</version>
+    <version>1.1.0.RELEASE</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

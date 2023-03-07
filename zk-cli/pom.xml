@@ -7,7 +7,7 @@
     <parent>
         <groupId>net.jmecn.zkxui</groupId>
         <artifactId>zk-xui</artifactId>
-        <version>1.0.0.RELEASE</version>
+        <version>1.1.0.RELEASE</version>
     </parent>
 
     <artifactId>zk-cli</artifactId>
@@ -26,6 +26,17 @@
             <groupId>net.jmecn.zkxui</groupId>
             <artifactId>zk-tui</artifactId>
             <version>${project.version}</version>
+        </dependency>
+        <!-- 命令行工具 -->
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli</artifactId>
+            <version>4.7.1</version>
+        </dependency>
+        <dependency>
+            <groupId>info.picocli</groupId>
+            <artifactId>picocli-codegen</artifactId>
+            <version>4.7.1</version>
         </dependency>
     </dependencies>
 
