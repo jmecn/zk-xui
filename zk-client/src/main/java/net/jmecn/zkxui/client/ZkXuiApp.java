@@ -6,10 +6,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 import lombok.extern.slf4j.Slf4j;
 import net.jmecn.zkxui.client.vo.Env;
@@ -193,9 +190,13 @@ public class ZkXuiApp {
         Set<LeafBean> leaves;
         try {
             leaves = client.exportTree(path);
-            for (LeafBean leaf : leaves) {
-                output.append(leaf.getPath()).append('=').append(leaf.getName()).append('=')
-                        .append(client.externalizeNodeValue(leaf.getValue())).append('\n');
+            Iterator<LeafBean> iterator = leaves.iterator();
+            while(iterator.hasNext()) {
+                LeafBean leaf = iterator.next();
+                output.append(leaf.getPath()).append('=').append(leaf.getName()).append('=').append(client.externalizeNodeValue(leaf.getValue()));
+                if (iterator.hasNext()) {
+                    output.append('\n');
+                }
             }
         } catch (KeeperException | InterruptedException e) {
             e.printStackTrace();
