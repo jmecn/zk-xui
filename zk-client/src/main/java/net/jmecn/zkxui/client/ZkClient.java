@@ -42,9 +42,11 @@ public class ZkClient {
 
     private Integer zkSessionTimeout = 1000;
 
+    private final static int CONNECT_WAIT = 100;
+
     private String zkServer = "127.0.0.1:2181";
 
-    public final static Integer MAX_CONNECT_ATTEMPT = 3;
+    public final static Integer MAX_CONNECT_ATTEMPT = 100;
 
     public final static String ZK_ROOT_NODE = "/";
 
@@ -91,10 +93,15 @@ public class ZkClient {
         }, zkClientConfig);
 
         // Wait till connection is established.
+        int maxConnectAttempt = zkSessionTimeout / CONNECT_WAIT;
+        if (maxConnectAttempt <= 0) {
+            maxConnectAttempt = MAX_CONNECT_ATTEMPT;
+        }
         while (zk.getState() != ZooKeeper.States.CONNECTED) {
-            Thread.sleep(30);
+            Thread.sleep(CONNECT_WAIT);
             connectAttempt++;
-            if (connectAttempt == MAX_CONNECT_ATTEMPT) {
+            if (connectAttempt >= maxConnectAttempt) {
+                log.info("Connection timeout:{}", zkSessionTimeout);
                 break;
             }
         }
@@ -108,6 +115,9 @@ public class ZkClient {
     }
 
     public void setZkSessionTimeout(Integer timeout) {
+        if (timeout == null) {
+            throw new IllegalArgumentException("zkSessionTimeout is null");
+        }
         this.zkSessionTimeout = timeout;
     }
 
