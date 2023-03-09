@@ -40,7 +40,7 @@ public class ZkClient {
 
     private ZooKeeper zk = null;
 
-    private Integer zkSessionTimeout = 1000;
+    private Integer zkSessionTimeout = 5000;
 
     private final static int CONNECT_WAIT = 100;
 
