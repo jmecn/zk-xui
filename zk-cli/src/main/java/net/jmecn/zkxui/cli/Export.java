@@ -13,6 +13,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.PrintStream;
+import java.text.MessageFormat;
 import java.util.Arrays;
 import java.util.concurrent.Callable;
 
@@ -39,6 +40,9 @@ public class Export implements Callable<Integer> {
     @Option(names = {"-a", "--all-in-one"}, description = "export all config path to one file.")
     private boolean allInOne;
 
+    @Option(names = {"-b", "--both"}, description = "export both ALL-IN-ONE and separated config file.")
+    private boolean both;
+
     @Option(names = {"-n", "--suffix-name"}, defaultValue = SUFFIX, description = "suffix name for export files (eg: txt), default: properties")
     private String suffix;
 
@@ -51,28 +55,43 @@ public class Export implements Callable<Integer> {
     @Parameters(paramLabel = "CONFIG_PATH", description = "one or more config path to export (eg: /config/scrm-context-prod)")
     private String[] configPaths;
 
+    private static final String INFO = "info";
+    private static final String WARN = "warn";
+
+    private void writeLog(String level, String msg, Object ... args) {
+        switch (level) {
+            case INFO:
+                log.info(msg, args);
+                System.out.println(MessageFormat.format(msg, args));
+                break;
+            case WARN:
+                log.warn(msg, args);
+                System.err.println(MessageFormat.format(msg, args));
+                break;
+        }
+    }
     @Override
     public Integer call() throws Exception {
         if (configPaths == null || configPaths.length == 0) {
-            log.warn("CONFIG_PATH not found");
+            writeLog(WARN, "CONFIG_PATH not found");
             return 1;
         }
 
         if (outputDir == null) {
-            log.warn("outputDir is null");
+            writeLog(WARN, "outputDir is null");
             return 1;
         }
 
         if (!outputDir.isDirectory()) {
-            log.warn("outputDir is not a directory.");
+            writeLog(WARN, "outputDir is not a directory.");
             return 1;
         }
         if (!outputDir.exists()) {
-            log.warn("outputDir not exists.");
+            writeLog(WARN, "outputDir not exists.");
             return 1;
         }
 
-        log.info("connect server:{}", server);
+        writeLog(INFO, "connect server:{}", server);
         Env env = new Env("server", server);
         ZkXuiApp app = new ZkXuiApp(env);
 
@@ -81,58 +100,66 @@ public class Export implements Callable<Integer> {
         }
 
         if (!app.connect()) {
-            app = null;
-            log.warn("connect failed.");
+            writeLog(WARN, "connect failed.");
             return 1;
         }
 
-        if (allInOne) {
+        if (both) {
             allInOne(app);
-        } else {
             output(app);
+        } else {
+            if (allInOne) {
+                allInOne(app);
+            } else {
+                output(app);
+            }
         }
 
-        log.info("Done!");
+        writeLog(INFO, "Done!");
         app.disconnect();
         return 0;
     }
 
     private void allInOne(ZkXuiApp app) {
+        writeLog(INFO, "exporting into ALL-ON-ONE file..");
+
         File file = new File(outputDir, getFileName(ALL_IN_ONE, suffix));
 
         if (file.exists()) {
             if (forceOverwrite) {
-                log.warn("force overwrite exists file:{}", file.getAbsolutePath());
+                writeLog(INFO, "force overwrite exists file:{}", file.getAbsolutePath());
             } else {
-                log.warn("file exists:{}", file.getAbsolutePath());
+                writeLog(INFO, "file exists:{}", file.getAbsolutePath());
                 return;
             }
         }
 
         try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
             for (String path : configPaths) {
-                log.info("export config path:{}", path);
+                writeLog(INFO, "export config path:{}", path);
                 String content = app.export(path, false);
                 out.println(content);
             }
             out.flush();
-            log.info("save {} to {}.", Arrays.toString(configPaths), file.getAbsolutePath());
+            writeLog(INFO, "save {} to {}.", Arrays.toString(configPaths), file.getAbsolutePath());
         } catch (IOException e) {
             log.error("export failed", e);
         }
     }
 
     private void output(ZkXuiApp app) {
+        writeLog(INFO, "exporting into separated file..");
+
         for (String path : configPaths) {
             String filename = getFileName(path, suffix);
             File file = new File(outputDir, filename);
-            log.info("export config path:{}, file:{}", path, file.getAbsolutePath());
+            writeLog(INFO, "export config path:{}, file:{}", path, file.getAbsolutePath());
 
             if (file.exists()) {
                 if (forceOverwrite) {
-                    log.warn("force overwrite exists file:{}", file.getAbsolutePath());
+                    writeLog(WARN, "force overwrite exists file:{}", file.getAbsolutePath());
                 } else {
-                    log.warn("file exists:{}", file.getAbsolutePath());
+                    writeLog(WARN, "file exists:{}", file.getAbsolutePath());
                     continue;
                 }
             }
@@ -142,7 +169,7 @@ public class Export implements Callable<Integer> {
             try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
                 out.print(content);
                 out.flush();
-                log.info("save {} to {}.", path, file.getAbsolutePath());
+                writeLog(INFO, "save {} to {}.", path, file.getAbsolutePath());
             } catch (IOException e) {
                 log.error("export failed, path:{}", path, e);
             }
