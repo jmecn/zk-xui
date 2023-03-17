@@ -154,6 +154,7 @@ public class Export implements Callable<Integer> {
             writeLog(INFO, "save {} to {}.", Arrays.toString(configPaths), file.getAbsolutePath());
         } catch (IOException e) {
             log.error("export failed", e);
+            e.printStackTrace();
         }
     }
 
@@ -182,6 +183,7 @@ public class Export implements Callable<Integer> {
                 writeLog(INFO, "save {} to {}.", path, file.getAbsolutePath());
             } catch (IOException e) {
                 log.error("export failed, path:{}", path, e);
+                e.printStackTrace();
             }
         }
     }
