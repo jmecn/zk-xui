@@ -58,15 +58,25 @@ public class Export implements Callable<Integer> {
     private static final String INFO = "info";
     private static final String WARN = "warn";
 
+    private static String format(String msg, Object ... args) {
+        String fmt = msg;
+        int i = 0;
+        while (fmt.contains("{}")) {
+            fmt = fmt.replaceFirst("\\{}", "{" + i + "}");
+            i++;
+        }
+        return MessageFormat.format(fmt, args);
+    }
+
     private void writeLog(String level, String msg, Object ... args) {
         switch (level) {
             case INFO:
                 log.info(msg, args);
-                System.out.println(MessageFormat.format(msg, args));
+                System.out.println(format(msg, args));
                 break;
             case WARN:
                 log.warn(msg, args);
-                System.err.println(MessageFormat.format(msg, args));
+                System.err.println(format(msg, args));
                 break;
         }
     }
@@ -121,7 +131,7 @@ public class Export implements Callable<Integer> {
     }
 
     private void allInOne(ZkXuiApp app) {
-        writeLog(INFO, "exporting into ALL-ON-ONE file..");
+        writeLog(INFO, "create ALL-ON-ONE file..");
 
         File file = new File(outputDir, getFileName(ALL_IN_ONE, suffix));
 
@@ -136,7 +146,7 @@ public class Export implements Callable<Integer> {
 
         try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
             for (String path : configPaths) {
-                writeLog(INFO, "export config path:{}", path);
+                writeLog(INFO, "exporting config path:{}", path);
                 String content = app.export(path, false);
                 out.println(content);
             }
@@ -148,12 +158,12 @@ public class Export implements Callable<Integer> {
     }
 
     private void output(ZkXuiApp app) {
-        writeLog(INFO, "exporting into separated file..");
+        writeLog(INFO, "create separated file..");
 
         for (String path : configPaths) {
             String filename = getFileName(path, suffix);
             File file = new File(outputDir, filename);
-            writeLog(INFO, "export config path:{}, file:{}", path, file.getAbsolutePath());
+            writeLog(INFO, "exporting config path:{}, file:{}", path, file.getAbsolutePath());
 
             if (file.exists()) {
                 if (forceOverwrite) {
