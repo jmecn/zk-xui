@@ -174,6 +174,15 @@ public class ZkXuiApp {
         }
     }
 
+    public boolean exists(String path) {
+        try {
+            return client.nodeExists(path);
+        } catch (KeeperException | InterruptedException e) {
+            log.error("node exists:{}", path, e);
+            return false;
+        }
+    }
+
     public String export() {
         return export(currentPath);
     }

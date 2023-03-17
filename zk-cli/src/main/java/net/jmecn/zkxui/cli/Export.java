@@ -144,17 +144,33 @@ public class Export implements Callable<Integer> {
             }
         }
 
+        boolean write = false;
         try (PrintStream out = new PrintStream(new FileOutputStream(file))) {
             for (String path : configPaths) {
+                if (!app.exists(path)) {
+                    writeLog(WARN, "config path not found:{}", path);
+                    continue;
+                }
                 writeLog(INFO, "exporting config path:{}", path);
                 String content = app.export(path, false);
                 out.println(content);
+                write = true;
             }
             out.flush();
             writeLog(INFO, "save {} to {}.", Arrays.toString(configPaths), file.getAbsolutePath());
         } catch (IOException e) {
             log.error("export failed", e);
-            e.printStackTrace();
+            if (file.delete()) {
+                writeLog(INFO, "delete {}", file.getAbsolutePath());
+            }
+        }
+
+        if (!write && file.exists()) {
+            if (file.delete()) {
+                writeLog(INFO, "NOTHING DUMP, delete {}", file.getAbsolutePath());
+            } else {
+                writeLog(INFO, "delete failed. {}", file.getAbsolutePath());
+            }
         }
     }
 
@@ -162,6 +178,11 @@ public class Export implements Callable<Integer> {
         writeLog(INFO, "create separated file..");
 
         for (String path : configPaths) {
+            if (!app.exists(path)) {
+                writeLog(WARN, "config path not found:{}", path);
+                continue;
+            }
+
             String filename = getFileName(path, suffix);
             File file = new File(outputDir, filename);
             writeLog(INFO, "exporting config path:{}, file:{}", path, file.getAbsolutePath());
@@ -183,7 +204,9 @@ public class Export implements Callable<Integer> {
                 writeLog(INFO, "save {} to {}.", path, file.getAbsolutePath());
             } catch (IOException e) {
                 log.error("export failed, path:{}", path, e);
-                e.printStackTrace();
+                if (file.delete()) {
+                    writeLog(INFO, "delete {}", file.getAbsolutePath());
+                }
             }
         }
     }
